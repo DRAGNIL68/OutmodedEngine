@@ -4,3 +4,7 @@ version: '${version}'
 main: net.outmoded.outmodedEngine.OutmodedEngine
 api-version: '1.21.11'
 load: STARTUP
+libraries:
+  - com.mysql:mysql-connector-j:9.2.0
+description: a functional fast simple model engine
+author: DRAGNIL68
