@@ -18,14 +18,12 @@ public class ModelManager {
         return ModelManager.SingletonHelper.SINGLETON_INSTANCE;
     }
 
-    public void spawnModel(UUID uuid, ModelTemplate modelTemplate){
+    public void registerModel(Model model) throws NullPointerException{
 
-        if (uuid == null || modelTemplate == null)
+        if (model == null)
             throw new NullPointerException();
 
-        // load model from template
-
-        //modelHashMap.put(uuid, model);
+        modelHashMap.put(model.getUuid(), model);
     }
 
     public void removeModel(UUID uuid){
