@@ -23,10 +23,12 @@ public class Model {
     private Model(Builder builder) {
         this.uuid = builder.uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
-
+        this.location = builder.location;
     }
 
     public UUID getUuid() {return uuid;}
+
+    public NamespacedKey getModelTemplateKey() {return modelTemplateKey;}
 
 
     public static class Builder {
