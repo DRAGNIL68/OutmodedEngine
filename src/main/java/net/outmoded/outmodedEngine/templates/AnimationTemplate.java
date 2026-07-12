@@ -41,7 +41,7 @@ public class AnimationTemplate {
      * the returned list is immutable
      */
     public List<NodeTemplate> getFrame(int index){
-        return Collections.unmodifiableList(frames.get(index));
+        return frames.get(index);
     }
 
     public int frameCount(){

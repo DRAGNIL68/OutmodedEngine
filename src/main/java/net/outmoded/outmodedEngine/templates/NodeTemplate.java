@@ -1,11 +1,18 @@
 package net.outmoded.outmodedEngine.templates;
 
+import com.github.retrooper.packetevents.protocol.item.ItemStack;
+import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.Hash;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class NodeTemplate{
+
     private final String name;
     private final String nodeType;
 
@@ -13,8 +20,6 @@ public class NodeTemplate{
     private final Quaternionf leftRotation;
     private final Vector3f scale;
     private final Float[] position;
-
-    private List<>
 
     public NodeTemplate(String name, String nodeType, Vector3f translation, Quaternionf leftRotation, Vector3f scale, Float[] position){
         this.name = name;
@@ -25,15 +30,6 @@ public class NodeTemplate{
         this.position = position;
     }
 
-    public NodeTemplate(NodeTemplate nodeTemplate){
-        this.name = nodeTemplate.name;
-        this.nodeType = nodeTemplate.nodeType;
-        this.translation = nodeTemplate.getTranslation();
-        this.leftRotation = nodeTemplate.getLeftRotation();
-        this.scale = nodeTemplate.getScale();
-        this.position = nodeTemplate.getPosition();
-
-    }
 
     public String getName() {return name;}
 
