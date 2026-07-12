@@ -1,5 +1,6 @@
 package net.outmoded.outmodedEngine.live;
 
+import net.outmoded.outmodedEngine.OutmodedEngine;
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.NamespacedKey;
@@ -11,14 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelManager {
     private final ConcurrentHashMap<UUID, Model> modelHashMap = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<NamespacedKey, List<Model>> typeLookup = new ConcurrentHashMap<>(); // really only exists to delete models fast
-
 
     private ModelManager() {}
 
     private static class SingletonHelper {
         private static final ModelManager SINGLETON_INSTANCE = new ModelManager();
     }
+
 
     public static ModelManager getInstance() {
         return ModelManager.SingletonHelper.SINGLETON_INSTANCE;
@@ -30,18 +30,17 @@ public class ModelManager {
             throw new IllegalArgumentException("model cannot be null!");
 
         modelHashMap.put(model.getUuid(), model);
-
-
+        OutmodedEngine.getInstance().getLogger().warning("registering new model");
     }
 
-    private void registerToLookup(Model model){
-        List<Model> models = typeLookup.get(model.getModelTemplateKey());
+    public boolean registerModelIfAbsent(Model model) throws IllegalArgumentException{
+        if (model == null)
+            throw new IllegalArgumentException("model cannot be null!");
 
-        if (model == null){
-            models = new ArrayList<>();
-        }
-
+        return modelHashMap.putIfAbsent(model.getUuid(), model) != null;
     }
+
+
 
 
 
@@ -67,11 +66,8 @@ public class ModelManager {
      */
     @InternalApi
     public synchronized void tickAllModels(){
-
         for (Model model : modelHashMap.values()){
-
-
-
+            model.tick();
         }
     }
 

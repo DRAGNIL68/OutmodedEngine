@@ -14,6 +14,8 @@ public class NodeTemplate{
     private final Vector3f scale;
     private final Float[] position;
 
+    private List<>
+
     public NodeTemplate(String name, String nodeType, Vector3f translation, Quaternionf leftRotation, Vector3f scale, Float[] position){
         this.name = name;
         this.nodeType = nodeType;
