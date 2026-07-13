@@ -1,15 +1,9 @@
 package net.outmoded.outmodedEngine.templates;
 
-import com.github.retrooper.packetevents.protocol.item.ItemStack;
-import com.google.common.collect.ImmutableList;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelTemplate {
-    private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>(); // Variant:PacketItemStack
+    private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>();
 
     private ModelTemplate(Builder builder){
         // do something
