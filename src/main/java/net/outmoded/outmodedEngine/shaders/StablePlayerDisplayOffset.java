@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.utils;
+package net.outmoded.outmodedEngine.shaders;
 
 public enum StablePlayerDisplayOffset {
     HEAD(0),

@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine;
+package net.outmoded.outmodedEngine.packets;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;

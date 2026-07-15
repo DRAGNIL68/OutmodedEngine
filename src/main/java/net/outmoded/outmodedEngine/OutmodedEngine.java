@@ -2,17 +2,13 @@ package net.outmoded.outmodedEngine;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.live.ModelManager;
+import net.outmoded.outmodedEngine.packets.PacketUtils;
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 public final class OutmodedEngine extends JavaPlugin {
 

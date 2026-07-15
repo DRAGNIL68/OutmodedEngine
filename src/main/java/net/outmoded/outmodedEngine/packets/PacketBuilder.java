@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine;
+package net.outmoded.outmodedEngine.packets;
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
@@ -10,7 +10,6 @@ import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import net.outmoded.outmodedEngine.live.Node;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
