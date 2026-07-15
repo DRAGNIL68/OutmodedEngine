@@ -4,6 +4,7 @@ import net.outmoded.outmodedEngine.OutmodedEngine;
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.NamespacedKey;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +25,9 @@ public class ModelManager {
         return ModelManager.SingletonHelper.SINGLETON_INSTANCE;
     }
 
-    public void registerModel(Model model) throws IllegalArgumentException{
-
-        if (model == null)
-            throw new IllegalArgumentException("model cannot be null!");
+    public void registerModel(@NotNull("model cannot be null!") Model model) throws IllegalArgumentException{
 
         modelHashMap.put(model.getUuid(), model);
-        OutmodedEngine.getInstance().getLogger().warning("registering new model");
     }
 
     public boolean registerModelIfAbsent(Model model) throws IllegalArgumentException{
@@ -65,7 +62,7 @@ public class ModelManager {
      * this should be run async
      */
     @InternalApi
-    public synchronized void tickAllModels(){
+    public void tickAllModels(){
         for (Model model : modelHashMap.values()){
             model.tick();
         }

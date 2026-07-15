@@ -19,6 +19,8 @@ public class Model {
     private final NamespacedKey modelTemplateKey;
     private volatile AnimationController animationController;
 
+    volatile String currentVariant = "default"; //TODO finish
+
     private Model(Builder builder, UUID uuid) {
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
@@ -26,10 +28,17 @@ public class Model {
 
     }
 
+    public void setCurrentVariant(@NotNull String currentVariant) {
+        this.currentVariant = currentVariant;
+    }
+
     @AsyncSafe
-    public void setLocation(Location location) {
-        if (location == null)
-            throw new IllegalArgumentException("location cannot be null");
+    public String getCurrentVariant() {
+        return currentVariant;
+    }
+
+    @AsyncSafe
+    public void setLocation(@NotNull Location location) {
 
         this.location = location.clone();
 
@@ -58,7 +67,7 @@ public class Model {
     }
 
     public void tick(){
-
+        animationController.tick();
     }
 
     public UUID getUuid() {return uuid;}
@@ -105,12 +114,16 @@ public class Model {
 
             }
 
+
+
+            Model model;
+            if (uuid == null) model = new Model(this, UUID.randomUUID());
+            else model = new Model(this, uuid);
+
             if (animationController == null)
-                animationController = new DefaultController();
+                model.animationController = new DefaultController(model);
 
-
-            if (uuid == null) return new Model(this, UUID.randomUUID());
-            else return new Model(this, uuid);
+            return model;
         }
     }
 }

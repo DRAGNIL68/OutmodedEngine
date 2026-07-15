@@ -11,22 +11,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Evet implements Listener {
 
+    int id = 0;
+
     @EventHandler
     public void event(PlayerJoinEvent event){
         event.getPlayer().getLocation();
 
         NamespacedKey namespacedKey = new NamespacedKey("frog", "test");
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Model model = new Model.Builder(namespacedKey, event.getPlayer().getLocation()).build();
-                model.register();
-                ModelManager.getInstance().tickAllModels();
-            }
-
-        }.runTaskAsynchronously(OutmodedEngine.getInstance());
-
+        Model model = new Model.Builder(namespacedKey, event.getPlayer().getLocation()).build();
+        model.register();
 
 
     }

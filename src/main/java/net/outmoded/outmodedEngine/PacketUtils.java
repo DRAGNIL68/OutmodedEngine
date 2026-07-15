@@ -1,8 +1,10 @@
 package net.outmoded.outmodedEngine;
 
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import org.bukkit.entity.Player;
 
@@ -11,9 +13,10 @@ import java.util.List;
 
 public class PacketUtils {
 
+    private PacketUtils(){}
+
     public static int getNextId(){
         return SpigotReflectionUtil.generateEntityId();
-
     }
 
     /**
@@ -32,5 +35,10 @@ public class PacketUtils {
 
             user.sendPacket(packetWrapper);
         }
+    }
+
+    public static ItemStack convertItemstack(org.bukkit.inventory.ItemStack itemStack){
+        return SpigotConversionUtil.fromBukkitItemStack(itemStack);
+
     }
 }

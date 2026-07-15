@@ -10,16 +10,10 @@ import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import io.github.retrooper.packetevents.util.SpigotConversionUtil;
-import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
-import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.live.Node;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.invoke.*;
-import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Function;
 
 public class PacketBuilder {
 
@@ -73,8 +67,8 @@ public class PacketBuilder {
             return this;
         }
 
-        public Entity vector(Vector3d vector3d){
-            this.vector3d = vector3d;
+        public Entity location(Vector3d location){
+            this.vector3d = location;
             return this;
         }
 
@@ -101,7 +95,7 @@ public class PacketBuilder {
                     entityId,
                     Optional.of(tempUuid),
                     entityType,
-                    vector3d,
+                    vector3d, // location
                     pitch,
                     yaw,
                     headYaw,
@@ -114,10 +108,10 @@ public class PacketBuilder {
     public static class Update {
         List<EntityData<?>> data = new ArrayList<>();
 
-        private final Node node; // stores all the data for visible players etc
+        private final int entityId; // stores all the data for visible players etc
 
-        public Update(@NotNull Node node){
-            this.node = node;
+        public Update(int entityId){
+            this.entityId = entityId;
         }
 
         //8
@@ -148,7 +142,7 @@ public class PacketBuilder {
 
         //13
         public Update leftRotation(Quaternion4f quaternion4f){
-            data.add(new EntityData(13, EntityDataTypes.QUATERNION, quaternion4f));
+            data.add(new EntityData<>(13, EntityDataTypes.QUATERNION, quaternion4f));
             return this;
         }
 
@@ -160,19 +154,19 @@ public class PacketBuilder {
 
         // 23
         public Update itemstack(ItemStack itemStack){
-            data.add(new EntityData(23, EntityDataTypes.ITEMSTACK, itemStack));
+            data.add(new EntityData<>(23, EntityDataTypes.ITEMSTACK, itemStack));
             return this;
         }
 
         // 23
         public Update block(WrappedBlockState blockState){
-            data.add(new EntityData(23, EntityDataTypes.BLOCK_STATE, blockState.getGlobalId()));
+            data.add(new EntityData<>(23, EntityDataTypes.BLOCK_STATE, blockState.getGlobalId()));
             return this;
         }
 
 
         public WrapperPlayServerEntityMetadata build(){
-            return new WrapperPlayServerEntityMetadata(node.getEntityId(),
+            return new WrapperPlayServerEntityMetadata(entityId,
                     data);
         }
 
