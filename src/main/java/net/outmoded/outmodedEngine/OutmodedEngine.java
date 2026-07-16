@@ -30,7 +30,7 @@ public final class OutmodedEngine extends JavaPlugin {
 
         NamespacedKey namespacedKey = new NamespacedKey("frog", "test");
 
-        ModelTemplateManager.getInstance().addModelTemplate(namespacedKey, modelTemplate);
+        ModelTemplateManager.getInstance().registerModelTemplate(namespacedKey, modelTemplate);
 
         getServer().getPluginManager().registerEvents(new Evet(), this); // model saving and loading
 

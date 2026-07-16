@@ -1,12 +1,6 @@
 package net.outmoded.outmodedEngine.templates;
 
-import io.papermc.paper.datacomponent.DataComponentBuilder;
-import io.papermc.paper.datacomponent.DataComponentHolder;
-import io.papermc.paper.datacomponent.DataComponentType;
-import io.papermc.paper.persistence.PersistentDataContainerView;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +8,6 @@ public class ModelTemplateManager {
     private final ConcurrentHashMap<String, ModelTemplate> modelTemplateHashMap = new ConcurrentHashMap<>();
 
     private ModelTemplateManager() {}
-
 
     private static class SingletonHelper {
         private static final ModelTemplateManager SINGLETON_INSTANCE = new ModelTemplateManager();
@@ -24,14 +17,14 @@ public class ModelTemplateManager {
         return SingletonHelper.SINGLETON_INSTANCE;
     }
 
-    public void addModelTemplate(NamespacedKey namespacedKey, ModelTemplate modelTemplate){
+    public void registerModelTemplate(NamespacedKey namespacedKey, ModelTemplate modelTemplate){
         if (namespacedKey == null || modelTemplate == null)
             throw new NullPointerException();
 
         modelTemplateHashMap.put(namespacedKey.getNamespace(), modelTemplate);
     }
 
-    public void removeModelTemplate(NamespacedKey namespacedKey){
+    public void unregisterModelTemplate(NamespacedKey namespacedKey){
         modelTemplateHashMap.remove(namespacedKey.getNamespace());
     }
 

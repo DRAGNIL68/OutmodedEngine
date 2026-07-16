@@ -39,7 +39,6 @@ public class ResourcePackServer {
     public ResourcePackServer(String url, int port){
         this.url = url;
         this.port = port;
-
     }
 
     public void setForced(boolean b){
