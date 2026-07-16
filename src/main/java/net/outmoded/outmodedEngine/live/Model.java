@@ -1,11 +1,10 @@
 package net.outmoded.outmodedEngine.live;
 
 
-import net.outmoded.outmodedEngine.AnimationController;
+import net.outmoded.outmodedEngine.interfaces.AnimationController;
 import net.outmoded.outmodedEngine.DefaultController;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
-import net.outmoded.outmodedEngine.dataholder.ImmutableLocation;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;

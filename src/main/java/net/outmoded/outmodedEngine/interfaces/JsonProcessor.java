@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine;
+package net.outmoded.outmodedEngine.interfaces;
 
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 

@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine;
+package net.outmoded.outmodedEngine.interfaces;
 
 /**
  * handles how a models animations are applied

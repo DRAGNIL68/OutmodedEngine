@@ -32,9 +32,6 @@ public final class OutmodedEngine extends JavaPlugin {
 
         ModelTemplateManager.getInstance().registerModelTemplate(namespacedKey, modelTemplate);
 
-        getServer().getPluginManager().registerEvents(new Evet(), this); // model saving and loading
-
-
         new BukkitRunnable() {
             @Override
             public void run() {

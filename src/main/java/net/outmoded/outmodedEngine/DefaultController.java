@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
+import net.outmoded.outmodedEngine.interfaces.AnimationController;
 import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;
@@ -15,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultController implements AnimationController{
+public class DefaultController implements AnimationController {
     private final int id = PacketUtils.getNextId();
     private final Model model;
 

@@ -1,5 +1,6 @@
 package net.outmoded.outmodedEngine;
 
+import net.outmoded.outmodedEngine.interfaces.JsonProcessor;
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 
 /**
