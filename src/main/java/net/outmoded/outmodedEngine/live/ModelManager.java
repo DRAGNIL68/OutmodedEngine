@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ModelManager {
+public final class ModelManager {
     private final ConcurrentHashMap<UUID, Model> modelHashMap = new ConcurrentHashMap<>();
 
     private ModelManager() {}

@@ -4,7 +4,7 @@ import org.bukkit.NamespacedKey;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ModelTemplateManager {
+public final class ModelTemplateManager {
     private final ConcurrentHashMap<String, ModelTemplate> modelTemplateHashMap = new ConcurrentHashMap<>();
 
     private ModelTemplateManager() {}
