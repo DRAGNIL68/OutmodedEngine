@@ -1,8 +1,8 @@
 package net.outmoded.outmodedEngine.live;
 
 
-import net.outmoded.outmodedEngine.interfaces.AnimationController;
-import net.outmoded.outmodedEngine.DefaultController;
+import net.outmoded.outmodedEngine.interfaces.BoneRenderer;
+import net.outmoded.outmodedEngine.DefaultRenderer;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
 import org.bukkit.Location;
@@ -16,7 +16,7 @@ public class Model {
     private final UUID uuid;
     private volatile Location location;
     private final NamespacedKey modelTemplateKey;
-    private volatile AnimationController animationController;
+    private volatile BoneRenderer boneRenderer;
 
     volatile String currentVariant = "default"; //TODO finish
 
@@ -66,7 +66,7 @@ public class Model {
     }
 
     public void tick(){
-        animationController.tick();
+        boneRenderer.tick();
     }
 
     public UUID getUuid() {return uuid;}
@@ -75,7 +75,7 @@ public class Model {
 
     @AsyncSafe
     public static class Builder {
-        private AnimationController animationController = null;
+        private BoneRenderer boneRenderer = null;
         private UUID uuid = null;
         private NamespacedKey modelTemplateKey = null;
         private Location location = null;
@@ -98,8 +98,8 @@ public class Model {
             return this;
         }
 
-        public Builder overrideAnimationController(AnimationController animationController){
-            this.animationController = animationController;
+        public Builder overrideAnimationController(BoneRenderer boneRenderer){
+            this.boneRenderer = boneRenderer;
             return this;
         }
 
@@ -119,8 +119,8 @@ public class Model {
             if (uuid == null) model = new Model(this, UUID.randomUUID());
             else model = new Model(this, uuid);
 
-            if (animationController == null)
-                model.animationController = new DefaultController(model);
+            if (boneRenderer == null)
+                model.boneRenderer = new DefaultRenderer(model);
 
             return model;
         }

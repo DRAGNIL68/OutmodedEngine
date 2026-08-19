@@ -4,7 +4,7 @@ import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import net.outmoded.outmodedEngine.interfaces.AnimationController;
+import net.outmoded.outmodedEngine.interfaces.BoneRenderer;
 import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;
@@ -16,19 +16,17 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultController implements AnimationController {
+public class DefaultRenderer implements BoneRenderer {
     private final int id = PacketUtils.getNextId();
     private final Model model;
 
-    public DefaultController(Model model){
+    public DefaultRenderer(Model model){
         this.model = model;
     }
 
 
-
     @Override
-    public void tick() {
-
+    public void process() {
         List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
 
         WrapperPlayServerSpawnEntity serverSpawnEntity = new PacketBuilder.Entity(EntityTypes.ITEM_DISPLAY)

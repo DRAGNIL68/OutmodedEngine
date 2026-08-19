@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ModelTemplate {
     private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, VariantTemplate> animations = new ConcurrentHashMap<>();
 
     private ModelTemplate(Builder builder){
         // do something
