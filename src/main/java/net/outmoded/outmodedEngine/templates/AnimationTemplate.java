@@ -3,9 +3,9 @@ package net.outmoded.outmodedEngine.templates;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
 
 public class AnimationTemplate {
     // [1][0] would be frame 1 node 0
