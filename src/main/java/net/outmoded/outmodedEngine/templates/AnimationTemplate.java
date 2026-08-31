@@ -11,7 +11,7 @@ public class AnimationTemplate {
     // [1][0] would be frame 1 node 0
     private final UUID uuid;
     private final String name;
-    private final List<List<NodeTemplate>> frames;
+    private final List<List<NodeTemplate>> frames; // anim index:list of bones
 
     /**
      *

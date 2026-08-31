@@ -1,13 +1,8 @@
 package net.outmoded.outmodedEngine.live;
 
-import net.outmoded.outmodedEngine.OutmodedEngine;
-import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import org.apache.logging.log4j.util.InternalApi;
-import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 

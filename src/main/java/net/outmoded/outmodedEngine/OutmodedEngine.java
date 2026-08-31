@@ -39,7 +39,7 @@ public final class OutmodedEngine extends JavaPlugin {
                 ModelManager.getInstance().tickAllModels();
             }
 
-        }.runTaskTimerAsynchronously(OutmodedEngine.getInstance(), 0, 1);
+        }.runTaskTimerAsynchronously(this, 0, 1);
 
 
     }

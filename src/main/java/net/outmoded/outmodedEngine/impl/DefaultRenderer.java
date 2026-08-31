@@ -1,10 +1,10 @@
-package net.outmoded.outmodedEngine;
+package net.outmoded.outmodedEngine.impl;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import net.outmoded.outmodedEngine.interfaces.BoneRenderer;
+import net.outmoded.outmodedEngine.live.BoneRenderer;
 import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;

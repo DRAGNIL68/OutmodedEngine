@@ -1,10 +1,11 @@
 package net.outmoded.outmodedEngine.live;
 
 
-import net.outmoded.outmodedEngine.interfaces.BoneRenderer;
-import net.outmoded.outmodedEngine.DefaultRenderer;
+import net.outmoded.outmodedEngine.impl.DefaultRenderer;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
+import net.outmoded.outmodedEngine.templates.ModelTemplate;
+import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +67,14 @@ public class Model {
     }
 
     public void tick(){
-        boneRenderer.tick();
+        ModelTemplate modelTemplate =
+                ModelTemplateManager.getInstance().
+                        getModelTemplate(modelTemplateKey); // should never be null
+
+        for (int i = 0; i < 5; i++) {
+
+        }
+
     }
 
     public UUID getUuid() {return uuid;}
@@ -112,8 +120,6 @@ public class Model {
                 throw new IllegalArgumentException("model location cannot be null!");
 
             }
-
-
 
             Model model;
             if (uuid == null) model = new Model(this, UUID.randomUUID());

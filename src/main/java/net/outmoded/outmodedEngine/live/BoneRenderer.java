@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.interfaces;
+package net.outmoded.outmodedEngine.live;
 
 /**
  * handles how a bone in a model appears to the world

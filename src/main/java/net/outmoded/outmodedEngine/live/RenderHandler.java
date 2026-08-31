@@ -1,13 +1,11 @@
 package net.outmoded.outmodedEngine.live;
 
 import com.google.common.collect.ImmutableList;
-import net.outmoded.outmodedEngine.interfaces.BoneRenderer;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * handles all the {@link net.outmoded.outmodedEngine.interfaces.BoneRenderer} that your project may have
+ * handles all the {@link BoneRenderer} that your project may have
  */
 public final class RenderHandler {
     private final CopyOnWriteArrayList<BoneRenderer> boneRenderers = new CopyOnWriteArrayList<>();
