@@ -34,9 +34,6 @@ public final class ModelManager {
 
 
 
-
-
-
     public void removeModel(UUID uuid){
         modelHashMap.remove(uuid);
     }
