@@ -1,17 +1,27 @@
 package net.outmoded.outmodedEngine.live;
 
 
+import com.google.common.collect.ImmutableList;
 import net.outmoded.outmodedEngine.impl.DefaultRenderer;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
 import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
+import net.outmoded.outmodedEngine.templates.NodeTemplate;
+import net.outmoded.outmodedEngine.templates.VariantTemplate;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.K;
 import org.jetbrains.annotations.NotNull;
 
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiConsumer;
 
 public class Model {
     private final UUID uuid;
@@ -19,7 +29,13 @@ public class Model {
     private final NamespacedKey modelTemplateKey;
     private volatile BoneRenderer boneRenderer;
 
+    // TODO: not finished
+    private final ConcurrentHashMap<UUID, Node> nodes = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Integer> animations = new ConcurrentHashMap<>(); // animation id : position
+
     volatile String currentVariant = "default"; //TODO finish
+
+    private CopyOnWriteArrayList<Player> hiddenList = new CopyOnWriteArrayList<>(); // if player is in list they cant see this model
 
     private Model(Builder builder, UUID uuid) {
         this.uuid = uuid;
@@ -66,16 +82,35 @@ public class Model {
         ModelManager.getInstance().registerModel(this);
     }
 
+    // this will run async
     public void tick(){
         ModelTemplate modelTemplate =
                 ModelTemplateManager.getInstance().
                         getModelTemplate(modelTemplateKey); // should never be null
 
-        for (int i = 0; i < 5; i++) {
+//        modelTemplate.getNodes().forEach(new BiConsumer<String, NodeTemplate>() { // debug
+//            @Override
+//            public void accept(UUID uuid, NodeTemplate nodeTemplate) {
+//                boneRenderer.process(nodeTemplate);
+//            }
+//        });
 
+        for (Map.Entry<UUID, NodeTemplate> entry : modelTemplate.getNodes().entrySet()) {
+            Node node = nodes.get(entry.getKey());
+            boneRenderer.process(entry.getValue(), node, this); // not sure if I like this
         }
-
     }
+
+    /**
+     * returns a list of all player who cant see this
+     * @return
+     */
+    public List<Player> getHiddenFrom(){
+        return ImmutableList.copyOf(hiddenList);
+    }
+
+    public void removePlayer(Player player){ hiddenList.remove(player); }
+    public void addPlayer(Player player){ hiddenList.add(player); }
 
     public UUID getUuid() {return uuid;}
 

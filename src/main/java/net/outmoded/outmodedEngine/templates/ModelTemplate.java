@@ -1,13 +1,20 @@
 package net.outmoded.outmodedEngine.templates;
 
 import com.google.common.collect.ImmutableMap;
+import net.outmoded.outmodedEngine.OutmodedEngine;
+import net.outmoded.outmodedEngine.live.ModelManager;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 // ALL data in this class should be immutable.
 public class ModelTemplate {
     private final boolean isPersistent;
+    private final ConcurrentHashMap<UUID, NodeTemplate> nodes = new ConcurrentHashMap<>();
+
     private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>();
+
     private final ConcurrentHashMap<String, AnimationTemplate> animations = new ConcurrentHashMap<>();
 
     private ModelTemplate(Builder builder){
@@ -16,7 +23,11 @@ public class ModelTemplate {
         //TODO: this is where the JSON should be converted into data.
         // this is done INTERNALLY so hou cant fuck up anything async
         // and yes I do have APS (async paranoia syndrome)
+
+
     }
+
+
 
     /**
      * this an immutable view
@@ -30,6 +41,13 @@ public class ModelTemplate {
      */
     public ImmutableMap<String, AnimationTemplate> getAnimations(){
         return ImmutableMap.copyOf(animations);
+    }
+
+    /**
+     * this an immutable view
+     */
+    public ImmutableMap<UUID, NodeTemplate> getNodes(){
+        return ImmutableMap.copyOf(nodes);
     }
 
     public boolean isPersistent() {
