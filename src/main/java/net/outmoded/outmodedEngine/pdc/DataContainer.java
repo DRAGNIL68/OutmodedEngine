@@ -65,9 +65,4 @@ public class DataContainer {
     private static  <T> void setSnapshotValue(DataContainer dataContainer, String namespacedId, DataObject<T> dataObject){
         dataContainer.setValue(namespacedId, dataObject.dataType(), dataObject.value());
     }
-
-
-
-
-
 }

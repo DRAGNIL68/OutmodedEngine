@@ -5,10 +5,7 @@ import com.google.common.collect.ImmutableList;
 import net.outmoded.outmodedEngine.impl.DefaultRenderer;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
-import net.outmoded.outmodedEngine.templates.ModelTemplate;
-import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
-import net.outmoded.outmodedEngine.templates.NodeTemplate;
-import net.outmoded.outmodedEngine.templates.VariantTemplate;
+import net.outmoded.outmodedEngine.templates.*;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -41,7 +38,27 @@ public class Model {
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
+        init();
+    }
 
+    private Model(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
+        this.uuid = uuid;
+        this.modelTemplateKey = modelTemplate;
+        this.location = location;
+        if (!ModelTemplateManager.getInstance().hasModelTemplate(modelTemplateKey)){
+            throw new IllegalArgumentException("modelTemplate does not exist");
+        }
+
+        init();
+    }
+
+    /**
+     * this method takes in data and constructs all the node data
+     */
+    private void init(){
+
+
+        // do stuff
     }
 
     public void setCurrentVariant(@NotNull String currentVariant) {
@@ -84,7 +101,7 @@ public class Model {
 
     // this will run async
     public void tick(){
-        ModelTemplate modelTemplate =
+        ModelTemplateInterface modelTemplate =
                 ModelTemplateManager.getInstance().
                         getModelTemplate(modelTemplateKey); // should never be null
 
@@ -123,9 +140,7 @@ public class Model {
         private NamespacedKey modelTemplateKey = null;
         private Location location = null;
 
-        /**
-         * should be run on main thread
-         */
+
         public Builder(@NotNull NamespacedKey modelTemplateKey, @NotNull Location location){
             this.modelTemplateKey = modelTemplateKey;
             this.location = location;
@@ -153,7 +168,6 @@ public class Model {
 
             if (location == null) { //TODO: this is not definitive
                 throw new IllegalArgumentException("model location cannot be null!");
-
             }
 
             Model model;
