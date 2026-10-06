@@ -1,28 +1,26 @@
 package net.outmoded.outmodedEngine.live;
 
-
 import com.google.common.collect.ImmutableList;
-import net.outmoded.outmodedEngine.impl.DefaultRenderer;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
-import net.outmoded.outmodedEngine.templates.*;
+import net.outmoded.outmodedEngine.impl.DefaultRenderer;
+import net.outmoded.outmodedEngine.templates.ModelTemplateInterface;
+import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
+import net.outmoded.outmodedEngine.templates.NodeTemplate;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.K;
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.BiConsumer;
 
 public class Model {
     private final UUID uuid;
-    private volatile Location location;
+    public volatile Location location;
     private final NamespacedKey modelTemplateKey;
     private volatile BoneRenderer boneRenderer;
 
@@ -45,6 +43,7 @@ public class Model {
         this.uuid = uuid;
         this.modelTemplateKey = modelTemplate;
         this.location = location;
+
         if (!ModelTemplateManager.getInstance().hasModelTemplate(modelTemplateKey)){
             throw new IllegalArgumentException("modelTemplate does not exist");
         }
@@ -181,3 +180,4 @@ public class Model {
         }
     }
 }
+
