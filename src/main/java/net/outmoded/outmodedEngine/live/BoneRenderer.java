@@ -1,6 +1,5 @@
 package net.outmoded.outmodedEngine.live;
 
-import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import net.outmoded.outmodedEngine.templates.NodeTemplate;
 
 /**

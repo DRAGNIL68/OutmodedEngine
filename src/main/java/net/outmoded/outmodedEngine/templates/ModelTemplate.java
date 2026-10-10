@@ -6,6 +6,8 @@ import org.jspecify.annotations.NonNull;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+
 // ALL data in this class should be immutable.
 public class ModelTemplate implements ModelTemplateInterface{
     private final boolean isPersistent;
@@ -18,27 +20,31 @@ public class ModelTemplate implements ModelTemplateInterface{
     public ModelTemplate(boolean isPersistent, String json){
         this.isPersistent = isPersistent;
 
-        //TODO: this is where the JSON should be converted into data.
+        //TODO: this is were the JSON should be converted into data.
         // this is done INTERNALLY so hou cant fuck up anything async
         // and yes I do have APS (async paranoia syndrome)
+
+
+        // check JSON schema here <--
+
     }
 
     /**
-     * this an immutable view
+     * Is an immutable view
      */
     public @NonNull ImmutableMap<String, VariantTemplate> getVariants(){
         return ImmutableMap.copyOf(variants);
     }
 
     /**
-     * this an immutable view
+     * Is an immutable view
      */
     public @NonNull ImmutableMap<String, AnimationTemplate> getAnimations(){
         return ImmutableMap.copyOf(animations);
     }
 
     /**
-     * this an immutable view
+     * Is an immutable view
      */
     public @NonNull ImmutableMap<UUID, NodeTemplate> getNodes(){
         return ImmutableMap.copyOf(nodes);

@@ -10,7 +10,6 @@ import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.live.Node;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;
-import net.outmoded.outmodedEngine.templates.ModelTemplate;
 import net.outmoded.outmodedEngine.templates.NodeTemplate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,6 +22,9 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * renders Outmoded Templates
+ */
 public class DefaultRenderer implements BoneRenderer {
     private final int id = PacketUtils.getNextId();
     private final Model model;
