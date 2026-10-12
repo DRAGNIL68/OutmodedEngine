@@ -27,7 +27,7 @@ public final class RenderHandler {
     }
 
     /**
-     * renders all the bones in a model
+     * runs all {@link BoneRenderer} attached to a model in order of insertion
      */
     public void render(){
 

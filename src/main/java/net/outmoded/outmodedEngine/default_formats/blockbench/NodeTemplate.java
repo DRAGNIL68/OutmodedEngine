@@ -1,15 +1,9 @@
-package net.outmoded.outmodedEngine.templates;
+package net.outmoded.outmodedEngine.default_formats.blockbench;
 
-import com.github.retrooper.packetevents.protocol.item.ItemStack;
-import com.google.common.collect.ImmutableList;
-import it.unimi.dsi.fastutil.Hash;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class NodeTemplate{
 

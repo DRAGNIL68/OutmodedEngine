@@ -1,16 +1,20 @@
-package net.outmoded.outmodedEngine.templates;
+package net.outmoded.outmodedEngine.default_formats.blockbench;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
+import net.outmoded.outmodedEngine.template.*;
 import org.jspecify.annotations.NonNull;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 
 // ALL data in this class should be immutable.
-public class ModelTemplate implements ModelTemplateInterface{
+public class ModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
     private final boolean isPersistent;
+
     private final ConcurrentHashMap<UUID, NodeTemplate> nodes = new ConcurrentHashMap<>();
 
     private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>();
@@ -26,7 +30,7 @@ public class ModelTemplate implements ModelTemplateInterface{
 
 
         // check JSON schema here <--
-
+        buildTemplate(json);
     }
 
     /**
@@ -52,5 +56,28 @@ public class ModelTemplate implements ModelTemplateInterface{
 
     public boolean isPersistent() {
         return isPersistent;
+    }
+
+
+    // called once to create the template
+    private void buildTemplate(String json){
+        JsonNode jsonNode;
+        try {
+            jsonNode = TemplateUtils.readTree(json);
+        } catch (IOException e) {
+            throw new RuntimeException("template building error: " + e);
+        }
+
+        // model settings
+        JsonNode settings = jsonNode.get("settings");
+
+        // default model structure
+        JsonNode structure = jsonNode.get("structure");
+
+        // animation data
+        JsonNode animations = jsonNode.get("animations");
+
+        // variants and model data abd textures
+        JsonNode texture_variants = jsonNode.get("texture_variants");
     }
 }

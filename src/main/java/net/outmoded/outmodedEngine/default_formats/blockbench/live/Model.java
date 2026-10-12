@@ -1,12 +1,16 @@
-package net.outmoded.outmodedEngine.live;
+package net.outmoded.outmodedEngine.default_formats.blockbench.live;
 
 import com.google.common.collect.ImmutableList;
+import net.outmoded.outmodedEngine.Co;
+import net.outmoded.outmodedEngine.Config;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
-import net.outmoded.outmodedEngine.annotations.NotAsyncSafe;
-import net.outmoded.outmodedEngine.impl.DefaultRenderer;
-import net.outmoded.outmodedEngine.templates.ModelTemplateInterface;
-import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
-import net.outmoded.outmodedEngine.templates.NodeTemplate;
+import net.outmoded.outmodedEngine.default_formats.blockbench.DefaultRenderer;
+import net.outmoded.outmodedEngine.live.BoneRenderer;
+import net.outmoded.outmodedEngine.live.ModelManager;
+import net.outmoded.outmodedEngine.live.Node;
+import net.outmoded.outmodedEngine.template.ModelTemplate;
+import net.outmoded.outmodedEngine.template.ModelTemplateManager;
+import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -36,7 +40,6 @@ public class Model {
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
-        init();
     }
 
     private Model(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
@@ -47,17 +50,6 @@ public class Model {
         if (!ModelTemplateManager.getInstance().hasModelTemplate(modelTemplateKey)){
             throw new IllegalArgumentException("modelTemplate does not exist");
         }
-
-        init();
-    }
-
-    /**
-     * this method takes in data and constructs all the node data
-     */
-    private void init(){
-
-
-        // do stuff
     }
 
     public void setCurrentVariant(@NotNull String currentVariant) {
@@ -85,22 +77,18 @@ public class Model {
     }
 
 
-    /**
-     * register a model to the model manager
-     */
-    @NotAsyncSafe
-    public void register() throws RuntimeException{
+    private void register() throws RuntimeException{
+        boolean b = ModelManager.getInstance().registerModelIfAbsent(this);
 
-        if (ModelManager.getInstance().hasModel(uuid)){
-            throw new RuntimeException("model with same uuid already exists");
+        if (Config.debugMode()){
+            Co.warn("cant register model with same uuid: "+getUuid());
         }
 
-        ModelManager.getInstance().registerModel(this);
     }
 
     // this will run async
     public void tick(){
-        ModelTemplateInterface modelTemplate =
+        ModelTemplate modelTemplate =
                 ModelTemplateManager.getInstance().
                         getModelTemplate(modelTemplateKey); // should never be null
 

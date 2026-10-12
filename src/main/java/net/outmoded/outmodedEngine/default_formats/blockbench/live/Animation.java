@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.live;
+package net.outmoded.outmodedEngine.default_formats.blockbench.live;
 
 import java.util.UUID;
 

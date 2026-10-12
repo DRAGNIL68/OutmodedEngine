@@ -1,6 +1,7 @@
 package net.outmoded.outmodedEngine.live;
 
 import net.outmoded.outmodedEngine.OutmodedEngine;
+import net.outmoded.outmodedEngine.default_formats.blockbench.live.Model;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -46,19 +47,14 @@ public final class ModelManager {
 
     }
 
-    public void registerModel(@NotNull("model cannot be null!") Model model) throws IllegalArgumentException{
+    public void registerModel(@NotNull("model cannot be null") Model model){
 
         modelHashMap.put(model.getUuid(), model);
     }
 
-    public boolean registerModelIfAbsent(Model model) throws IllegalArgumentException{
-        if (model == null)
-            throw new IllegalArgumentException("model cannot be null!");
-
+    public boolean registerModelIfAbsent(@NotNull("model cannot be null") Model model){
         return modelHashMap.putIfAbsent(model.getUuid(), model) != null;
     }
-
-
 
     public void removeModel(UUID uuid){
         modelHashMap.remove(uuid);

@@ -1,6 +1,9 @@
-package net.outmoded.outmodedEngine.templates;
+package net.outmoded.outmodedEngine.template;
 
 import com.google.common.collect.ImmutableMap;
+import net.outmoded.outmodedEngine.default_formats.blockbench.AnimationTemplate;
+import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
+import net.outmoded.outmodedEngine.default_formats.blockbench.VariantTemplate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -8,7 +11,7 @@ import java.util.UUID;
 /**
  * make sure that state cannot be modified when implementing this
  */
-public interface ModelTemplateInterface {
+public interface ModelTemplate {
 
     /**
      * this an immutable view

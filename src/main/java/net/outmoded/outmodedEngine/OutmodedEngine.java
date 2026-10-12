@@ -3,7 +3,7 @@ package net.outmoded.outmodedEngine;
 import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.outmoded.outmodedEngine.live.ModelManager;
-import net.outmoded.outmodedEngine.templates.ModelTemplateManager;
+import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class OutmodedEngine extends JavaPlugin {

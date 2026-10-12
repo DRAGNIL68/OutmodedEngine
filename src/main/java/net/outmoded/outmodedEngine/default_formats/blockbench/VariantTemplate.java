@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.templates;
+package net.outmoded.outmodedEngine.default_formats.blockbench;
 
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
 
