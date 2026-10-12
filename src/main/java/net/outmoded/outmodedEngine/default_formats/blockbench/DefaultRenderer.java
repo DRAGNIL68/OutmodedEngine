@@ -6,7 +6,8 @@ import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
 import net.outmoded.outmodedEngine.live.BoneRenderer;
-import net.outmoded.outmodedEngine.default_formats.blockbench.live.Model;
+import net.outmoded.outmodedEngine.default_formats.blockbench.live.BBModel;
+import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.live.Node;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;
@@ -26,9 +27,9 @@ import java.util.List;
  */
 public class DefaultRenderer implements BoneRenderer {
     private final int id = PacketUtils.getNextId();
-    private final Model model;
+    private final BBModel model;
 
-    public DefaultRenderer(Model model){
+    public DefaultRenderer(BBModel model){
         this.model = model;
     }
 

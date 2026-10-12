@@ -1,16 +1,20 @@
 package net.outmoded.outmodedEngine.live;
 
 import net.outmoded.outmodedEngine.OutmodedEngine;
-import net.outmoded.outmodedEngine.default_formats.blockbench.live.Model;
+import net.outmoded.outmodedEngine.default_formats.blockbench.live.BBModel;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class ModelManager {
-    private final ConcurrentHashMap<UUID, Model> modelHashMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, BBModel> modelHashMap = new ConcurrentHashMap<>();
 
     private ModelManager() {
         init();
@@ -39,7 +43,7 @@ public final class ModelManager {
             @Override
             public void run() {
 
-//                for (Model model : ModelManager.getInstance().get)
+//                for (BBModel model : ModelManager.getInstance().get)
 
             }
 
@@ -47,28 +51,40 @@ public final class ModelManager {
 
     }
 
-    public void registerModel(@NotNull("model cannot be null") Model model){
+    public void registerModel(@NotNull("model cannot be null") BBModel model){
 
         modelHashMap.put(model.getUuid(), model);
     }
 
-    public boolean registerModelIfAbsent(@NotNull("model cannot be null") Model model){
+    public boolean registerModelIfAbsent(@NotNull("model cannot be null") BBModel model){
         return modelHashMap.putIfAbsent(model.getUuid(), model) != null;
     }
 
-    public void removeModel(UUID uuid){
-        modelHashMap.remove(uuid);
+    private ConcurrentLinkedQueue<UUID> queue = new ConcurrentLinkedQueue<>();
+
+    /**
+     * removes model at the end of animation tick
+     */
+    public void queueFreeModel(UUID uuid){
+        queue.add(uuid);
     }
+
+    private void queueFree(){
+        while (queue.peek() != null){
+            modelHashMap.remove(queue.poll()); // removes uuid from hashmap
+        }
+    }
+
 
     public boolean hasModel(UUID uuid){
         return modelHashMap.containsKey(uuid);
     }
 
-    public Model getModel(UUID uuid){
+    public BBModel getModel(UUID uuid){
         return modelHashMap.get(uuid);
     }
 
-    public ConcurrentHashMap<UUID, Model> getModels(){
+    public ConcurrentHashMap<UUID, BBModel> getModels(){
         return new ConcurrentHashMap<>(modelHashMap);
     }
 
@@ -77,7 +93,7 @@ public final class ModelManager {
      */
     @InternalApi
     public void tickAllModels(){
-        for (Model model : modelHashMap.values()){
+        for (BBModel model : modelHashMap.values()){
             model.tick();
         }
     }

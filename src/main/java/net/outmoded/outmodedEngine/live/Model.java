@@ -1,11 +1,13 @@
 package net.outmoded.outmodedEngine.live;
 
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
-public interface LiveModel {
+public interface Model {
 
     /**
      * should call bone renderer here
@@ -20,5 +22,8 @@ public interface LiveModel {
 
     public @NotNull RenderHandler getRenderHandler();
 
-    //public Node[] getNodes();
+    public @NotNull List<Node> getNodes();
+
+    public @NotNull NamespacedKey getTemplateKey();
+
 }

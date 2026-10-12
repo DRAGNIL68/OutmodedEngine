@@ -5,9 +5,7 @@ import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.Config;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.default_formats.blockbench.DefaultRenderer;
-import net.outmoded.outmodedEngine.live.BoneRenderer;
-import net.outmoded.outmodedEngine.live.ModelManager;
-import net.outmoded.outmodedEngine.live.Node;
+import net.outmoded.outmodedEngine.live.*;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
@@ -22,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Model {
+public class BBModel implements Model{
     private final UUID uuid;
     public volatile Location location;
     private final NamespacedKey modelTemplateKey;
@@ -36,13 +34,13 @@ public class Model {
 
     private CopyOnWriteArrayList<Player> hiddenList = new CopyOnWriteArrayList<>(); // if player is in list they cant see this model
 
-    private Model(Builder builder, UUID uuid) {
+    private BBModel(Builder builder, UUID uuid) {
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
     }
 
-    private Model(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
+    private BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
         this.uuid = uuid;
         this.modelTemplateKey = modelTemplate;
         this.location = location;
@@ -67,6 +65,22 @@ public class Model {
         this.location = location.clone();
 
     }
+
+    @Override
+    public @NotNull RenderHandler getRenderHandler() {
+        return null;
+    }
+
+    @Override
+    public @NotNull List<Node> getNodes() {
+        return List.of();
+    }
+
+    @Override
+    public @NotNull NamespacedKey getTemplateKey() {
+        return null;
+    }
+
 
     /**
      * can be used async just don't touch the world stuff
@@ -149,7 +163,7 @@ public class Model {
         }
 
         //
-        public Model build() throws IllegalArgumentException{
+        public BBModel build() throws IllegalArgumentException{
             if (modelTemplateKey == null)
                 throw new IllegalArgumentException("modelTemplateKey is null");
 
@@ -157,9 +171,9 @@ public class Model {
                 throw new IllegalArgumentException("model location cannot be null!");
             }
 
-            Model model;
-            if (uuid == null) model = new Model(this, UUID.randomUUID());
-            else model = new Model(this, uuid);
+            BBModel model;
+            if (uuid == null) model = new BBModel(this, UUID.randomUUID());
+            else model = new BBModel(this, uuid);
 
             if (boneRenderer == null)
                 model.boneRenderer = new DefaultRenderer(model);
