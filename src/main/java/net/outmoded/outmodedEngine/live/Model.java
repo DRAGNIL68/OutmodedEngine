@@ -1,5 +1,6 @@
 package net.outmoded.outmodedEngine.live;
 
+import com.google.common.collect.ImmutableMap;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,7 @@ public interface Model {
 
     public @NotNull RenderHandler getRenderHandler();
 
-    public @NotNull List<Node> getNodes();
+    public @NotNull ImmutableMap<UUID, Node> getNodes();
 
     public @NotNull NamespacedKey getTemplateKey();
 

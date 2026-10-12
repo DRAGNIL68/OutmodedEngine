@@ -93,8 +93,8 @@ public final class ModelManager {
      */
     @InternalApi
     public void tickAllModels(){
-        for (BBModel model : modelHashMap.values()){
-            model.tick();
+        for (Model model : modelHashMap.values()){
+            model.getRenderHandler().render(model);
         }
     }
 

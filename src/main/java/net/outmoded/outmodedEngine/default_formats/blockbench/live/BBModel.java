@@ -1,6 +1,7 @@
 package net.outmoded.outmodedEngine.default_formats.blockbench.live;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.Config;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
@@ -72,8 +73,8 @@ public class BBModel implements Model{
     }
 
     @Override
-    public @NotNull List<Node> getNodes() {
-        return List.of();
+    public @NotNull ImmutableMap<UUID, Node> getNodes() {
+        return null;
     }
 
     @Override
@@ -102,6 +103,8 @@ public class BBModel implements Model{
 
     // this will run async
     public void tick(){
+
+
         ModelTemplate modelTemplate =
                 ModelTemplateManager.getInstance().
                         getModelTemplate(modelTemplateKey); // should never be null

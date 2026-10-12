@@ -2,6 +2,7 @@ package net.outmoded.outmodedEngine.live;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 
@@ -43,8 +44,6 @@ public final class RenderHandler {
      */
     public void render(Model model){
 
-
-
         if (model == null)
             return;
 
@@ -53,12 +52,18 @@ public final class RenderHandler {
         if (modelTemplate == null)
             return;
 
-        model.getNodes().forEach( node -> {
+        ImmutableMap<UUID, Node> nodes = model.getNodes();
+        ImmutableMap<UUID, NodeTemplate> nodeTemplates = modelTemplate.getNodes();
 
-//            for (BoneRenderer renderer : boneRenderers.values()){
-//                renderer.process(modelTemplate, node, model);
-//
-//            }
+        nodeTemplates.forEach(  (uuid, nodeTemplate) -> {
+
+            Node node = nodes.get(uuid); // can be null
+
+
+            for (BoneRenderer renderer : boneRenderers.values()){
+                renderer.process(nodeTemplate, node, model);
+            }
+
         });
         //Nodes...
 
