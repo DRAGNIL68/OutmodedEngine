@@ -6,12 +6,9 @@ import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class ModelManager {
     private final ConcurrentHashMap<UUID, BBModel> modelHashMap = new ConcurrentHashMap<>();
@@ -33,6 +30,17 @@ public final class ModelManager {
             @Override
             public void run() {
 
+                /*
+                    TODO: IMPORTANT: fix loop sync
+                    currently the loop will just keep getting executed even if the last tick did not finish.
+                    This can lead to all sorts of strange bugs that will haunt me if not fixed.
+
+                    My fix idea, I am going to try and use a dynamic tick system that can execute the animation loop multiple times per tick
+                    if needed to keep sync with the server. <- probably going to use this one
+
+                    Or i could just add skipped ticks to the current frame time of every model,
+                    even if that would probably cause problems with custom BoneRenders
+                 */
                 ModelManager.getInstance().tickAllModels();
 
             }

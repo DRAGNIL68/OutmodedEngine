@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ModelTemplateManager {
-    private final ConcurrentHashMap<String, ModelTemplate> modelTemplateHashMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<NamespacedKey, ModelTemplate> modelTemplateHashMap = new ConcurrentHashMap<>();
 
     private ModelTemplateManager() {}
 
@@ -21,22 +21,22 @@ public final class ModelTemplateManager {
         if (namespacedKey == null || modelTemplate == null)
             throw new NullPointerException();
 
-        modelTemplateHashMap.put(namespacedKey.getNamespace(), modelTemplate);
+        modelTemplateHashMap.put(namespacedKey, modelTemplate);
     }
 
     public void unregisterModelTemplate(NamespacedKey namespacedKey){
-        modelTemplateHashMap.remove(namespacedKey.getNamespace());
+        modelTemplateHashMap.remove(namespacedKey);
     }
 
     public boolean hasModelTemplate(NamespacedKey namespacedKey){
-        return modelTemplateHashMap.containsKey(namespacedKey.getNamespace());
+        return modelTemplateHashMap.containsKey(namespacedKey);
     }
 
     public ModelTemplate getModelTemplate(NamespacedKey namespacedKey){
         if (namespacedKey == null)
             return null;
 
-        return modelTemplateHashMap.get(namespacedKey.getNamespace());
+        return modelTemplateHashMap.get(namespacedKey);
 
     }
 
