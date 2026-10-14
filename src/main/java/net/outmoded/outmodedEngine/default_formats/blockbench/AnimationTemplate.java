@@ -14,7 +14,6 @@ public class AnimationTemplate {
     private final List<List<NodeTemplate>> frames; // anim index:list of bones
 
     /**
-     *
      * @param uuid uuid of animation
      * @param name name of animation
      * @param frameData frame data
@@ -31,6 +30,7 @@ public class AnimationTemplate {
         for (List<NodeTemplate> nodeTemplates : frameData){
             data.add(ImmutableList.copyOf(nodeTemplates));
         }
+
         this.frames = ImmutableList.copyOf(data);
     }
 

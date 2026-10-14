@@ -27,10 +27,8 @@ import java.util.List;
  */
 public class DefaultRenderer implements BoneRenderer {
     private final int id = PacketUtils.getNextId();
-    private final BBModel model;
 
-    public DefaultRenderer(BBModel model){
-        this.model = model;
+    public DefaultRenderer(){
     }
 
     // an example of how to render bones

@@ -37,7 +37,6 @@ public final class ModelTemplateManager {
             return null;
 
         return modelTemplateHashMap.get(namespacedKey);
-
     }
 
 

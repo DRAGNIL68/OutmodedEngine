@@ -14,6 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class BBModel implements Model{
     private final UUID uuid;
     public volatile Location location;
     private final NamespacedKey modelTemplateKey;
-    private volatile BoneRenderer boneRenderer;
+    private final RenderHandler renderHandler = new RenderHandler();
 
     // TODO: not finished
     private final ConcurrentHashMap<UUID, Node> nodes = new ConcurrentHashMap<>();
@@ -39,6 +40,7 @@ public class BBModel implements Model{
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
+        renderHandler.registerBoneRenderer("test", new DefaultRenderer());
     }
 
     private BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
@@ -69,7 +71,7 @@ public class BBModel implements Model{
 
     @Override
     public @NotNull RenderHandler getRenderHandler() {
-        return null;
+        return renderHandler;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class BBModel implements Model{
 
     @Override
     public @NotNull NamespacedKey getTemplateKey() {
-        return null;
+        return modelTemplateKey;
     }
 
 
@@ -87,7 +89,7 @@ public class BBModel implements Model{
      * can be used async just don't touch the world stuff
      */
     @AsyncSafe
-    public Location getLocation() {
+    public @NonNull Location getLocation() {
         return location.clone();
     }
 
@@ -116,10 +118,12 @@ public class BBModel implements Model{
 //            }
 //        });
 
-        for (Map.Entry<UUID, NodeTemplate> entry : modelTemplate.getNodes().entrySet()) {
-            Node node = nodes.get(entry.getKey());
-            boneRenderer.process(entry.getValue(), node, this); // not sure if I like this
-        }
+        renderHandler.render(this);
+//        for (Map.Entry<UUID, NodeTemplate> entry : modelTemplate.getNodes().entrySet()) {
+//            Node node = nodes.get(entry.getKey());
+//
+//            boneRenderer.process(entry.getValue(), node, this); // not sure if I like this
+//        }
     }
 
     /**
@@ -177,9 +181,6 @@ public class BBModel implements Model{
             BBModel model;
             if (uuid == null) model = new BBModel(this, UUID.randomUUID());
             else model = new BBModel(this, uuid);
-
-            if (boneRenderer == null)
-                model.boneRenderer = new DefaultRenderer(model);
 
             return model;
         }
