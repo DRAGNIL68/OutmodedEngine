@@ -11,4 +11,8 @@ public class TemplateUtils {
     public static JsonNode readTree(String json) throws IOException {
         return defaultMapper.readTree(json);
     }
+
+    public static ObjectMapper mapper(){
+        return defaultMapper;
+    }
 }
