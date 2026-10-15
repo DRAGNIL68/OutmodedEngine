@@ -27,4 +27,9 @@ public interface Model {
 
     public @NotNull NamespacedKey getTemplateKey();
 
+    /**
+     * Is used to decide  if a model should be ticked
+     */
+    public boolean isActive();
+
 }

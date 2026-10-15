@@ -6,11 +6,8 @@ import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 
-import java.lang.ref.SoftReference;
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * handles all the {@link BoneRenderer} that your project may have
@@ -44,7 +41,7 @@ public final class RenderHandler {
      */
     public void render(Model model){
 
-        if (model == null)
+        if (model == null && !model.isActive())
             return;
 
         ModelTemplate modelTemplate = ModelTemplateManager.getInstance().getModelTemplate(model.getTemplateKey());
@@ -53,7 +50,7 @@ public final class RenderHandler {
             return;
 
         ImmutableMap<UUID, Node> nodes = model.getNodes();
-        ImmutableMap<UUID, NodeTemplate> nodeTemplates = modelTemplate.getNodes();
+        ImmutableMap<UUID, NodeTemplate> nodeTemplates = modelTemplate.getNodesMap();
 
         nodeTemplates.forEach(  (uuid, nodeTemplate) -> {
 

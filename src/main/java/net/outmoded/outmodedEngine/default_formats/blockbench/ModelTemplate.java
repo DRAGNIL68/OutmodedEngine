@@ -10,7 +10,7 @@ import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,10 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
     private final boolean isPersistent;
 
-    private final ConcurrentHashMap<UUID, NodeTemplate> nodes = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, VariantTemplate> variants = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, AnimationTemplate> animations = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, String> textures = new ConcurrentHashMap<>(); //name:base64
+    private final ConcurrentHashMap<UUID, NodeTemplate> nodesMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, VariantTemplate> variantsMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, AnimationTemplate> animationsMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, String> texturesMap = new ConcurrentHashMap<>(); //name:base64
 
     public ModelTemplate(boolean isPersistent, String json){
         this.isPersistent = isPersistent;
@@ -40,22 +40,22 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
     /**
      * Is an immutable view
      */
-    public @NonNull ImmutableMap<String, VariantTemplate> getVariants(){
-        return ImmutableMap.copyOf(variants);
+    public @NonNull ImmutableMap<String, VariantTemplate> getVariantsMap(){
+        return ImmutableMap.copyOf(variantsMap);
     }
 
     /**
      * Is an immutable view
      */
-    public @NonNull ImmutableMap<String, AnimationTemplate> getAnimations(){
-        return ImmutableMap.copyOf(animations);
+    public @NonNull ImmutableMap<String, AnimationTemplate> getAnimationsMap(){
+        return ImmutableMap.copyOf(animationsMap);
     }
 
     /**
      * Is an immutable view
      */
-    public @NonNull ImmutableMap<UUID, NodeTemplate> getNodes(){
-        return ImmutableMap.copyOf(nodes);
+    public @NonNull ImmutableMap<UUID, NodeTemplate> getNodesMap(){
+        return ImmutableMap.copyOf(nodesMap);
     }
 
     public boolean isPersistent() {
@@ -78,20 +78,19 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
             // model settings
             JsonNode settings = jsonNode.get("settings");
 
-            JsonNode namespacedId = settings.get("namespacedId");
-            JsonNode credit = settings.get("credit");
+            String namespacedId = settings.get("namespacedId").asText();
+            String credit = settings.get("credit").asText();
 
             JsonNode userProperties = settings.get("user_properties"); // <- important
         }
 
         {
-            // animation data
-            JsonNode animations = jsonNode.get("animations");
-            for (JsonNode node : animations) {
+            JsonNode textures = jsonNode.get("textures");
 
-
-            }
-
+            Iterator<String> iterator = jsonNode.fieldNames();
+            iterator.forEachRemaining(name -> {
+                texturesMap.put(name, textures.get(name).asText());
+            });
         }
 
         {
@@ -110,10 +109,10 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
 
                 try {
                     // editor has some data problems rn
-                    Float[] pos = TemplateUtils.mapper().treeToValue(node.get("name"), jacksonTypeReference); // does not need to be changed in any way
-                    Float[] leftList = TemplateUtils.mapper().treeToValue(node.get("name"), jacksonTypeReference); // left rotation
-                    Float[] translationList = TemplateUtils.mapper().treeToValue(node.get("name"), jacksonTypeReference);
-                    Float[] scaleList = TemplateUtils.mapper().treeToValue(node.get("name"), jacksonTypeReference);
+                    Float[] pos = TemplateUtils.mapper().treeToValue(transform.get("position"), jacksonTypeReference); // does not need to be changed in any way
+                    Float[] leftList = TemplateUtils.mapper().treeToValue(transform.get("left_rotation"), jacksonTypeReference); // left rotation
+                    Float[] translationList = TemplateUtils.mapper().treeToValue(transform.get("translation"), jacksonTypeReference);
+                    Float[] scaleList = TemplateUtils.mapper().treeToValue(transform.get("scale"), jacksonTypeReference);
 
                     Quaternionf leftRot = new Quaternionf(leftList[0], leftList[1], leftList[2], leftList[3]);
                     Vector3f translation = new Vector3f(); // cant do this yet
@@ -128,7 +127,7 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
                             pos
                     );
 
-                    nodes.put(UUID.fromString(node.get("uuid").asText()), nodeTemplate);
+                    nodesMap.put(UUID.fromString(node.get("uuid").asText()), nodeTemplate);
 
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);

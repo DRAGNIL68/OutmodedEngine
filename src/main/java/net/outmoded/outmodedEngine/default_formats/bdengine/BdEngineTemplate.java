@@ -11,17 +11,17 @@ import java.util.UUID;
 
 public class BdEngineTemplate implements ModelTemplate {
     @Override
-    public @NotNull ImmutableMap<String, VariantTemplate> getVariants() {
+    public @NotNull ImmutableMap<String, VariantTemplate> getVariantsMap() {
         return null;
     }
 
     @Override
-    public @NotNull ImmutableMap<String, AnimationTemplate> getAnimations() {
+    public @NotNull ImmutableMap<String, AnimationTemplate> getAnimationsMap() {
         return null;
     }
 
     @Override
-    public @NotNull ImmutableMap<UUID, NodeTemplate> getNodes() {
+    public @NotNull ImmutableMap<UUID, NodeTemplate> getNodesMap() {
         return null;
     }
 

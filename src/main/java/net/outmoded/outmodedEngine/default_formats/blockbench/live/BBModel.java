@@ -84,6 +84,11 @@ public class BBModel implements Model{
         return modelTemplateKey;
     }
 
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+
 
     /**
      * can be used async just don't touch the world stuff

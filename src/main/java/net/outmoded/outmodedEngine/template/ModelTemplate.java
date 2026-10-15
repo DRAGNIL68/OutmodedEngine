@@ -16,17 +16,17 @@ public interface ModelTemplate {
     /**
      * this an immutable view
      */
-    public @NotNull ImmutableMap<String, VariantTemplate> getVariants();
+    public @NotNull ImmutableMap<String, VariantTemplate> getVariantsMap();
 
     /**
      * this an immutable view
      */
-    public @NotNull ImmutableMap<String, AnimationTemplate> getAnimations();
+    public @NotNull ImmutableMap<String, AnimationTemplate> getAnimationsMap();
 
     /**
      * this an immutable view
      */
-    public @NotNull ImmutableMap<UUID, NodeTemplate> getNodes();
+    public @NotNull ImmutableMap<UUID, NodeTemplate> getNodesMap();
 
     /**
      * isPersistent decides if a model will be saved to disk
