@@ -6,19 +6,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TickRunnable extends BukkitRunnable {
 
-    private final AtomicBoolean isRunning = new AtomicBoolean(false);
+    private final AtomicBoolean aBoolean;
+
+    public TickRunnable(AtomicBoolean aBoolean){
+        this.aBoolean = aBoolean;
+    }
 
     @Override
     public void run() {
-        if (isRunning.get())
-            return;
-
-        isRunning.set(true);
+        aBoolean.set(true);
         ModelManager.getInstance().tickAllModels();
-        isRunning.set(false);
+        aBoolean.set(false);
     }
 
-    public boolean isRunning(){
-        return isRunning.get();
-    }
 }

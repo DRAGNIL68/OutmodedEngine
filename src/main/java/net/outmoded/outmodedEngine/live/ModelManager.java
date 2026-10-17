@@ -26,14 +26,16 @@ public final class ModelManager {
         return ModelManager.SingletonHelper.SINGLETON_INSTANCE;
     }
 
-    private final TickRunnable runnable = new TickRunnable();
+    private final AtomicBoolean isRunning = new AtomicBoolean(false);
+
     public void init(){
+
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!runnable.isRunning()){
-                    runnable.runTaskAsynchronously(OutmodedEngine.getInstance());
+                if (!isRunning.get()){
+                    new TickRunnable(isRunning).runTaskAsynchronously(OutmodedEngine.getInstance());
                 }
             }
 
