@@ -7,21 +7,21 @@ import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * handles all the {@link BoneRenderer} that your project may have
  */
 public final class RenderHandler {
 
-    private final ConcurrentHashMap<String, BoneRenderer> boneRenderers = new ConcurrentHashMap<>();
+    private final ConcurrentLinkedDeque<BoneRenderer> boneRenderers = new ConcurrentLinkedDeque<>();
 
-    public void registerBoneRenderer(String id, BoneRenderer boneRenderer) {
-        boneRenderers.put(id, boneRenderer);
-    }
-
-    public void unregisterBoneRenderer(String id) {
-        boneRenderers.remove(id);
+    /**
+     * first BoneRenderer in is executed last.
+     * I recommend you use that one to send the display packet
+     */
+    public void addBoneRenderer(BoneRenderer boneRenderer) {
+        boneRenderers.add(boneRenderer);
     }
 
     public void clearBoneRenderers() {
@@ -29,19 +29,22 @@ public final class RenderHandler {
     }
 
     public ImmutableList<BoneRenderer> getBoneRenderersList() {
-        return ImmutableList.copyOf(boneRenderers.values());
+        return ImmutableList.copyOf(boneRenderers);
     }
 
-    public ImmutableMap<String, BoneRenderer> getBoneRenderers() {
-        return ImmutableMap.copyOf(boneRenderers);
+    public ImmutableList<BoneRenderer> getBoneRenderersSnapshot() {
+        return ImmutableList.copyOf(boneRenderers);
     }
 
     /**
      * runs all {@link BoneRenderer} attached to a model in order of insertion
      */
-    public void render(Model model){
+    public synchronized void render(Model model){
 
-        if (model == null && !model.isActive())
+        if (model == null)
+            return;
+
+        if (!model.isActive())
             return;
 
         ModelTemplate modelTemplate = ModelTemplateManager.getInstance().getModelTemplate(model.getTemplateKey());
@@ -52,18 +55,13 @@ public final class RenderHandler {
         ImmutableMap<UUID, Node> nodes = model.getNodes();
         ImmutableMap<UUID, NodeTemplate> nodeTemplates = modelTemplate.getNodesMap();
 
-        nodeTemplates.forEach(  (uuid, nodeTemplate) -> {
+        nodeTemplates.forEach( (uuid, nodeTemplate) -> {
 
             Node node = nodes.get(uuid); // can be null
 
-
-            for (BoneRenderer renderer : boneRenderers.values()){
+            for (BoneRenderer renderer : boneRenderers){
                 renderer.process(nodeTemplate, node, model);
             }
-
         });
-        //Nodes...
-
     }
-
 }

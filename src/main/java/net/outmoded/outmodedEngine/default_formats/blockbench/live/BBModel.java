@@ -9,7 +9,6 @@ import net.outmoded.outmodedEngine.default_formats.blockbench.DefaultRenderer;
 import net.outmoded.outmodedEngine.live.*;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
-import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -17,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,7 +38,7 @@ public class BBModel implements Model{
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
-        renderHandler.registerBoneRenderer("test", new DefaultRenderer());
+        renderHandler.addBoneRenderer(new DefaultRenderer());
     }
 
     private BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {

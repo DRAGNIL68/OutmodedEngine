@@ -73,7 +73,6 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
         }
 
 
-
         {
             // model settings
             JsonNode settings = jsonNode.get("settings");
