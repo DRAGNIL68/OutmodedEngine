@@ -24,7 +24,7 @@ public class BBModel implements Model{
     private final UUID uuid;
     public volatile Location location;
     private final NamespacedKey modelTemplateKey;
-    private final RenderHandler renderHandler = new RenderHandler();
+    private final RenderHandler renderHandler;
 
     // TODO: not finished
     private final ConcurrentHashMap<UUID, Node> nodes = new ConcurrentHashMap<>();
@@ -38,13 +38,15 @@ public class BBModel implements Model{
         this.uuid = uuid;
         this.modelTemplateKey = builder.modelTemplateKey;
         this.location = builder.location;
-        renderHandler.addBoneRenderer(new DefaultRenderer());
+        this.renderHandler = builder.renderHandler;
     }
 
     private BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
         this.uuid = uuid;
         this.modelTemplateKey = modelTemplate;
         this.location = location;
+        this.renderHandler = new RenderHandler();
+        this.renderHandler.addBoneRenderer(new DefaultRenderer());
 
         if (!ModelTemplateManager.getInstance().hasModelTemplate(modelTemplateKey)){
             throw new IllegalArgumentException("modelTemplate does not exist");
@@ -85,6 +87,16 @@ public class BBModel implements Model{
     @Override
     public boolean isActive() {
         return true;
+    }
+
+    @Override
+    public void spawn(Location location) {
+
+    }
+
+    @Override
+    public void remove() {
+
     }
 
 
@@ -131,7 +143,6 @@ public class BBModel implements Model{
 
     /**
      * returns a list of all player who cant see this
-     * @return
      */
     public List<Player> getHiddenFrom(){
         return ImmutableList.copyOf(hiddenList);
@@ -140,13 +151,14 @@ public class BBModel implements Model{
     public void removePlayer(Player player){ hiddenList.remove(player); }
     public void addPlayer(Player player){ hiddenList.add(player); }
 
-    public UUID getUuid() {return uuid;}
+    public @NonNull UUID getUuid() {return uuid;}
 
     public NamespacedKey getModelTemplateKey() {return modelTemplateKey;}
 
     @AsyncSafe
     public static class Builder {
-        private BoneRenderer boneRenderer = null;
+
+        private final RenderHandler renderHandler = new RenderHandler();
         private UUID uuid = null;
         private NamespacedKey modelTemplateKey = null;
         private Location location = null;
@@ -167,8 +179,8 @@ public class BBModel implements Model{
             return this;
         }
 
-        public Builder overrideAnimationController(BoneRenderer boneRenderer){
-            this.boneRenderer = boneRenderer;
+        public Builder addAnimationController(BoneRenderer boneRenderer){
+            renderHandler.addBoneRenderer(boneRenderer);
             return this;
         }
 
@@ -180,6 +192,8 @@ public class BBModel implements Model{
             if (location == null) { //TODO: this is not definitive
                 throw new IllegalArgumentException("model location cannot be null!");
             }
+
+            renderHandler.addBoneRenderer(new DefaultRenderer());
 
             BBModel model;
             if (uuid == null) model = new BBModel(this, UUID.randomUUID());

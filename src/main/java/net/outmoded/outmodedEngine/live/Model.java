@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface Model {
@@ -28,8 +27,19 @@ public interface Model {
     public @NotNull NamespacedKey getTemplateKey();
 
     /**
-     * Is used to decide  if a model should be ticked
+     * Is used to decide if a model should be ticked
      */
     public boolean isActive();
+
+    /**
+     * creates the model in the world
+     * and also deals with spawning in packet displays etc
+     */
+    public void spawn(Location location);
+
+    /**
+     * removes the
+     */
+    public void remove();
 
 }

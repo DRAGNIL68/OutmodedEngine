@@ -28,10 +28,6 @@ public final class RenderHandler {
         boneRenderers.clear();
     }
 
-    public ImmutableList<BoneRenderer> getBoneRenderersList() {
-        return ImmutableList.copyOf(boneRenderers);
-    }
-
     public ImmutableList<BoneRenderer> getBoneRenderersSnapshot() {
         return ImmutableList.copyOf(boneRenderers);
     }
@@ -59,7 +55,7 @@ public final class RenderHandler {
 
             Node node = nodes.get(uuid); // can be null
 
-            for (BoneRenderer renderer : boneRenderers){
+            for (BoneRenderer renderer : getBoneRenderersSnapshot()){
                 renderer.process(nodeTemplate, node, model);
             }
         });
