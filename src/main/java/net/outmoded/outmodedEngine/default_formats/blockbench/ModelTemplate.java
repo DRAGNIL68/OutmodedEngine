@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
+import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.template.*;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -25,8 +26,8 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
     private final ConcurrentHashMap<String, AnimationTemplate> animationsMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, String> texturesMap = new ConcurrentHashMap<>(); //name:base64
 
-    public ModelTemplate(boolean isPersistent, String json){
-        this.isPersistent = isPersistent;
+    public ModelTemplate(String json){
+        this.isPersistent = true;
 
         //TODO: this is were the JSON should be converted into data.
         // this is done INTERNALLY so hou cant fuck up anything async
@@ -81,25 +82,37 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
             String credit = settings.get("credit").asText();
 
             JsonNode userProperties = settings.get("user_properties"); // <- important
+            Co.info("template data");
+            Co.warn("settings:");
+            Co.info("namespacedId: "+namespacedId);
+            Co.info("credit: "+credit);
+
         }
 
         {
+            Co.warn("textures:");
             JsonNode textures = jsonNode.get("textures");
 
-            Iterator<String> iterator = jsonNode.fieldNames();
+            Iterator<String> iterator = textures.fieldNames();
             iterator.forEachRemaining(name -> {
-                texturesMap.put(name, textures.get(name).asText());
+                Co.info("texture name: "+name);
+                texturesMap.put(name, textures.asText());
             });
         }
 
         {
             // default model structure
             JsonNode structure = jsonNode.get("structure");
-
+            Co.warn("bones");
             for (JsonNode node : structure) { // uuid
+
 
                 String type = node.get("type").asText();
                 String name = node.get("name").asText();
+                UUID uuid = UUID.fromString(node.get("uuid").asText());
+                Co.info("bone uuid: "+uuid);
+                Co.info("bone type: "+type);
+                Co.info("bone name: "+name);
 
                 JsonNode transform = node.get("transform");
 
@@ -112,9 +125,10 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
                     Float[] leftList = TemplateUtils.mapper().treeToValue(transform.get("left_rotation"), jacksonTypeReference); // left rotation
                     Float[] translationList = TemplateUtils.mapper().treeToValue(transform.get("translation"), jacksonTypeReference);
                     Float[] scaleList = TemplateUtils.mapper().treeToValue(transform.get("scale"), jacksonTypeReference);
-
                     Quaternionf leftRot = new Quaternionf(leftList[0], leftList[1], leftList[2], leftList[3]);
+
                     Vector3f translation = new Vector3f(); // cant do this yet
+
                     Vector3f scale = new Vector3f(scaleList[0], scaleList[1], scaleList[2]);
 
                     NodeTemplate nodeTemplate = new NodeTemplate(

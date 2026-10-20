@@ -42,4 +42,8 @@ public interface Model {
      */
     public void remove();
 
+    public void setPersistence();
+
+    public boolean isPersistent();
+
 }

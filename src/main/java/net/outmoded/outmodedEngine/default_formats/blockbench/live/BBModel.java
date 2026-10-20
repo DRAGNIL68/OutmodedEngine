@@ -99,6 +99,16 @@ public class BBModel implements Model{
 
     }
 
+    @Override
+    public void setPersistence() {
+
+    }
+
+    @Override
+    public boolean isPersistent() {
+        return false;
+    }
+
 
     /**
      * can be used async just don't touch the world stuff
