@@ -67,11 +67,14 @@ public final class ModelManager {
     /**
      * removes model at the end of animation tick
      */
-    public void queueFreeModel(UUID uuid){
+    public void queueFree(UUID uuid){
         queue.add(uuid);
     }
 
-    private void queueFree(){
+    /**
+     * adds a model to a queue to be removed
+     */
+    private void queueFreeExecute(){
         while (queue.peek() != null){
             modelHashMap.remove(queue.poll()); // removes uuid from hashmap
         }

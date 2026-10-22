@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 // ALL data in this class should be immutable.
-public class ModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
+public class BBModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
     private final boolean isPersistent;
 
     private final ConcurrentHashMap<UUID, NodeTemplate> nodesMap = new ConcurrentHashMap<>();
@@ -26,7 +26,7 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
     private final ConcurrentHashMap<String, AnimationTemplate> animationsMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, String> texturesMap = new ConcurrentHashMap<>(); //name:base64
 
-    public ModelTemplate(String json){
+    public BBModelTemplate(String json){
         this.isPersistent = true;
 
         //TODO: this is were the JSON should be converted into data.
@@ -145,8 +145,6 @@ public class ModelTemplate implements net.outmoded.outmodedEngine.template.Model
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
-
-
             }
         }
 

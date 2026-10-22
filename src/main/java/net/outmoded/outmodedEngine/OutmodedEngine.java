@@ -2,11 +2,15 @@ package net.outmoded.outmodedEngine;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-import net.outmoded.outmodedEngine.default_formats.blockbench.ModelTemplate;
+import net.outmoded.fastListenerRegistration.ListenerRegister;
+import net.outmoded.outmodedEngine.default_formats.blockbench.BBModelTemplate;
+import net.outmoded.outmodedEngine.default_formats.blockbench.live.BBModel;
 import net.outmoded.outmodedEngine.live.ModelManager;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 public final class OutmodedEngine extends JavaPlugin {
 
@@ -20,7 +24,7 @@ public final class OutmodedEngine extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        ListenerRegister.register(this);
         PacketEvents.getAPI().init();
 
         // this is here to start some code not very smart
@@ -167,11 +171,11 @@ public final class OutmodedEngine extends JavaPlugin {
                 "    }\n" +
                 "}";
 
-        ModelTemplate template = new ModelTemplate(json);
+        BBModelTemplate template = new BBModelTemplate(json);
+        NamespacedKey key = new NamespacedKey("test", "test");
         ModelTemplateManager.getInstance().registerModelTemplate(new NamespacedKey("test", "test"), template);
-
 //        PacketUtils.getNextId();
-//        ModelTemplate modelTemplate = new ModelTemplate.Builder().build();
+//        BBModelTemplate modelTemplate = new BBModelTemplate.Builder().build();
 //
 //        NamespacedKey namespacedKey = new NamespacedKey("frog", "test");
 //

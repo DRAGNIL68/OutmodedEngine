@@ -1,25 +1,42 @@
 package net.outmoded.outmodedEngine.default_formats.blockbench.live;
 
+import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
+import com.github.retrooper.packetevents.util.Quaternion4f;
+import com.github.retrooper.packetevents.util.Vector3d;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.Config;
 import net.outmoded.outmodedEngine.annotations.AsyncSafe;
+import net.outmoded.outmodedEngine.default_formats.blockbench.BBModelTemplate;
 import net.outmoded.outmodedEngine.default_formats.blockbench.DefaultRenderer;
 import net.outmoded.outmodedEngine.live.*;
+import net.outmoded.outmodedEngine.packets.PacketBuilder;
+import net.outmoded.outmodedEngine.packets.PacketUtils;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+// models should have 2 states in existence and not
+// if it exists its nodes should exist
+// if not well it does not exist, well it does not matter
 public class BBModel implements Model{
     private final UUID uuid;
     public volatile Location location;
@@ -28,20 +45,13 @@ public class BBModel implements Model{
 
     // TODO: not finished
     private final ConcurrentHashMap<UUID, Node> nodes = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<String, Integer> animations = new ConcurrentHashMap<>(); // animation id : position
+    private final ConcurrentHashMap<String, Animation> animations = new ConcurrentHashMap<>(); // animation id : position
 
     volatile String currentVariant = "default"; //TODO finish
 
     private CopyOnWriteArrayList<Player> hiddenList = new CopyOnWriteArrayList<>(); // if player is in list they cant see this model
 
-    private BBModel(Builder builder, UUID uuid) {
-        this.uuid = uuid;
-        this.modelTemplateKey = builder.modelTemplateKey;
-        this.location = builder.location;
-        this.renderHandler = builder.renderHandler;
-    }
-
-    private BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
+    public BBModel(@NotNull UUID uuid, @NotNull NamespacedKey modelTemplate, @NotNull Location location) {
         this.uuid = uuid;
         this.modelTemplateKey = modelTemplate;
         this.location = location;
@@ -51,7 +61,55 @@ public class BBModel implements Model{
         if (!ModelTemplateManager.getInstance().hasModelTemplate(modelTemplateKey)){
             throw new IllegalArgumentException("modelTemplate does not exist");
         }
+
+        loadTemplate(modelTemplate);
     }
+
+    public void loadTemplate(NamespacedKey modelTemplate) {
+        ModelTemplate template = ModelTemplateManager.getInstance().getModelTemplate(modelTemplate);
+
+        if (template == null) {
+            if (ModelManager.getInstance().hasModel(uuid))
+                ModelManager.getInstance().queueFree(uuid);
+
+            throw new IllegalArgumentException("ModelTemplate has to exist");
+        }
+
+        if (!(template instanceof BBModelTemplate bbTemplate)) {
+            throw new IllegalArgumentException("ModelTemplate not instance of BBModelTemplate");
+        }
+
+        animations.clear();
+
+        bbTemplate.getNodesMap().forEach((uuid, nodeTemplate) -> {
+
+
+            List<Player> list = new ArrayList<>(Bukkit.getOnlinePlayers());
+
+            int id = PacketUtils.getNextId();
+            WrapperPlayServerSpawnEntity serverSpawnEntity = new PacketBuilder.Entity(EntityTypes.ITEM_DISPLAY)
+                    .entityId(id)
+                    .location(new Vector3d(location.getX(), location.getY(), location.getZ()))
+                    .build();
+
+            Quaternionf qf = nodeTemplate.getLeftRotation();
+            Vector3f f = nodeTemplate.getTranslation();
+            Vector3f scale = nodeTemplate.getScale();
+
+            WrapperPlayServerEntityMetadata wrapperPlayServerEntityMetadata = new PacketBuilder.Update(id)
+                    .itemstack(PacketUtils.convertItemstack(new ItemStack(Material.ACACIA_BOAT)))
+                    .leftRotation(new Quaternion4f(qf.x, qf.y, qf.z, qf.w))
+                    .translation(new com.github.retrooper.packetevents.util.Vector3f(f.x, f.y, f.z))
+                    .scale(new com.github.retrooper.packetevents.util.Vector3f(scale.x, scale.y, scale.z))
+                    .build();
+
+            PacketUtils.sendPacketToPlayers(serverSpawnEntity, list);
+            PacketUtils.sendPacketToPlayers(wrapperPlayServerEntityMetadata, list);
+
+            nodes.put(uuid, new Node(id, uuid));
+        });
+    }
+
 
     public void setCurrentVariant(@NotNull String currentVariant) {
         this.currentVariant = currentVariant;
@@ -64,9 +122,7 @@ public class BBModel implements Model{
 
     @AsyncSafe
     public void setLocation(@NotNull Location location) {
-
         this.location = location.clone();
-
     }
 
     @Override
@@ -76,7 +132,7 @@ public class BBModel implements Model{
 
     @Override
     public @NotNull ImmutableMap<UUID, Node> getNodes() {
-        return null;
+        return ImmutableMap.copyOf(nodes);
     }
 
     @Override
@@ -89,6 +145,15 @@ public class BBModel implements Model{
         return true;
     }
 
+    @Override
+    public void setActive(boolean b) {
+        // do stuff
+    }
+
+    /**
+     * called before the model is destroyed
+     * deals with clearing entity display packets
+     */
     @Override
     public void spawn(Location location) {
 
@@ -119,36 +184,15 @@ public class BBModel implements Model{
     }
 
 
-    private void register() throws RuntimeException{
+    public void register() throws RuntimeException{
         boolean b = ModelManager.getInstance().registerModelIfAbsent(this);
+        if (b)
+            Co.info("registered model: "+modelTemplateKey.asString()+" uuid: "+uuid);
 
         if (Config.debugMode()){
             Co.warn("cant register model with same uuid: "+getUuid());
         }
 
-    }
-
-    // this will run async
-    public void tick(){
-
-
-        ModelTemplate modelTemplate =
-                ModelTemplateManager.getInstance().
-                        getModelTemplate(modelTemplateKey); // should never be null
-
-//        modelTemplate.getNodes().forEach(new BiConsumer<String, NodeTemplate>() { // debug
-//            @Override
-//            public void accept(UUID uuid, NodeTemplate nodeTemplate) {
-//                boneRenderer.process(nodeTemplate);
-//            }
-//        });
-
-        renderHandler.render(this);
-//        for (Map.Entry<UUID, NodeTemplate> entry : modelTemplate.getNodes().entrySet()) {
-//            Node node = nodes.get(entry.getKey());
-//
-//            boneRenderer.process(entry.getValue(), node, this); // not sure if I like this
-//        }
     }
 
     /**
@@ -165,52 +209,5 @@ public class BBModel implements Model{
 
     public NamespacedKey getModelTemplateKey() {return modelTemplateKey;}
 
-    @AsyncSafe
-    public static class Builder {
-
-        private final RenderHandler renderHandler = new RenderHandler();
-        private UUID uuid = null;
-        private NamespacedKey modelTemplateKey = null;
-        private Location location = null;
-
-
-        public Builder(@NotNull NamespacedKey modelTemplateKey, @NotNull Location location){
-            this.modelTemplateKey = modelTemplateKey;
-            this.location = location;
-        }
-
-        /**
-         * enforce a specific uuid
-         * @param uuid
-         * @return
-         */
-        public Builder enforceUuid(UUID uuid){
-            this.uuid = uuid;
-            return this;
-        }
-
-        public Builder addAnimationController(BoneRenderer boneRenderer){
-            renderHandler.addBoneRenderer(boneRenderer);
-            return this;
-        }
-
-        //
-        public BBModel build() throws IllegalArgumentException{
-            if (modelTemplateKey == null)
-                throw new IllegalArgumentException("modelTemplateKey is null");
-
-            if (location == null) { //TODO: this is not definitive
-                throw new IllegalArgumentException("model location cannot be null!");
-            }
-
-            renderHandler.addBoneRenderer(new DefaultRenderer());
-
-            BBModel model;
-            if (uuid == null) model = new BBModel(this, UUID.randomUUID());
-            else model = new BBModel(this, uuid);
-
-            return model;
-        }
-    }
 }
 

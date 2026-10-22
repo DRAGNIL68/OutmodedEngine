@@ -9,11 +9,6 @@ import java.util.UUID;
 
 public interface Model {
 
-    /**
-     * should call bone renderer here
-     */
-    public void tick();
-
     public @NotNull UUID getUuid();
 
     public @NotNull Location getLocation();
@@ -31,14 +26,16 @@ public interface Model {
      */
     public boolean isActive();
 
+    //sets if the model is active
+    public void setActive(boolean b);
     /**
      * creates the model in the world
-     * and also deals with spawning in packet displays etc
+     * and also deals with spawning in packet displays etc.
      */
     public void spawn(Location location);
 
     /**
-     * removes the
+     * called before the model is destroyed
      */
     public void remove();
 

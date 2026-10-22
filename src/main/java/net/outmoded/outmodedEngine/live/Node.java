@@ -8,10 +8,18 @@ import java.util.UUID;
  * stores data on all entity displays that make up a model
  */
 public class Node {
-    public UUID uuid;
+    private final UUID uuid;
     // live id
+    private final int id;
     // visible players
-    public int getEntityId(){ return 1; } // temp
+
+    public Node(int id, UUID uuid){
+        this.id = id;
+        this.uuid = uuid;
+    }
+    public int getEntityId(){ return id; } // temp
+    public UUID getNodeUuid() { return uuid; }
+
 
     ItemStack currentVariant;
 }
