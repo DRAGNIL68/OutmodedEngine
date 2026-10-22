@@ -1,10 +1,9 @@
-package net.outmoded.outmodedEngine.default_formats.blockbench;
+package net.outmoded.outmodedEngine.defaultFormats.blockbench;
 
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 public class NodeTemplate{
 

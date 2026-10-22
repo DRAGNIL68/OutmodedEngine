@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.default_formats.blockbench;
+package net.outmoded.outmodedEngine.defaultFormats.blockbench;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.util.Quaternion4f;
@@ -6,7 +6,6 @@ import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityMetadata;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
 import net.outmoded.outmodedEngine.live.BoneRenderer;
-import net.outmoded.outmodedEngine.default_formats.blockbench.live.BBModel;
 import net.outmoded.outmodedEngine.live.Model;
 import net.outmoded.outmodedEngine.live.Node;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;

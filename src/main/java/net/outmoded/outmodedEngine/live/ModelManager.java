@@ -1,7 +1,7 @@
 package net.outmoded.outmodedEngine.live;
 
 import net.outmoded.outmodedEngine.OutmodedEngine;
-import net.outmoded.outmodedEngine.default_formats.blockbench.live.BBModel;
+import net.outmoded.outmodedEngine.defaultFormats.blockbench.live.BBModel;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;

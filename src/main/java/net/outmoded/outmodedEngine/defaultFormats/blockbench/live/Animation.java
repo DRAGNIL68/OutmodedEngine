@@ -1,6 +1,5 @@
-package net.outmoded.outmodedEngine.default_formats.blockbench.live;
+package net.outmoded.outmodedEngine.defaultFormats.blockbench.live;
 
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 

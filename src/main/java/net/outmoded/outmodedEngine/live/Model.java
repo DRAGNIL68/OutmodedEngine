@@ -31,8 +31,14 @@ public interface Model {
     /**
      * creates the model in the world
      * and also deals with spawning in packet displays etc.
+     * REMEMBER TO REGISTER FIRST
      */
     public void spawn(Location location);
+
+    /**
+     * called when a model
+     */
+    public void respawn(Object databaseEntry);
 
     /**
      * called before the model is destroyed

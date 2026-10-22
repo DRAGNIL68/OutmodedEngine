@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.default_formats.blockbench;
+package net.outmoded.outmodedEngine.defaultFormats.blockbench;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -2,7 +2,7 @@ package net.outmoded.outmodedEngine.live;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import net.outmoded.outmodedEngine.default_formats.blockbench.NodeTemplate;
+import net.outmoded.outmodedEngine.defaultFormats.blockbench.NodeTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplate;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 
