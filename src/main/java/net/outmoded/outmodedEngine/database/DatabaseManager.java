@@ -3,7 +3,7 @@ package net.outmoded.outmodedEngine.database;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DatabaseManager {
-    CopyOnWriteArrayList<ModelLoadListener> listeners = new CopyOnWriteArrayList<>();
+    CopyOnWriteArrayList<ModelLoadCallback> listeners = new CopyOnWriteArrayList<>();
 
     private DatabaseManager() {}
 
@@ -16,7 +16,11 @@ public class DatabaseManager {
     }
 
 
-    public void registerListener(ModelLoadListener listener){
+    /**
+     * used to register callbacks for model loading
+     * @param listener
+     */
+    public void callback(ModelLoadCallback listener){
         listeners.add(listener);
     }
 

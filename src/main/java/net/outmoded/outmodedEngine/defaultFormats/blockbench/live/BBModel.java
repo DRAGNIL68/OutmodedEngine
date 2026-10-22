@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.Config;
-import net.outmoded.outmodedEngine.annotations.AsyncSafe;
 import net.outmoded.outmodedEngine.defaultFormats.blockbench.BBModelTemplate;
 import net.outmoded.outmodedEngine.defaultFormats.blockbench.DefaultRenderer;
 import net.outmoded.outmodedEngine.live.*;
@@ -115,12 +114,12 @@ public class BBModel implements Model{
         this.currentVariant = currentVariant;
     }
 
-    @AsyncSafe
+
     public String getCurrentVariant() {
         return currentVariant;
     }
 
-    @AsyncSafe
+
     public void setLocation(@NotNull Location location) {
         this.location = location.clone();
     }
@@ -178,7 +177,7 @@ public class BBModel implements Model{
     /**
      * can be used async just don't touch the world stuff
      */
-    @AsyncSafe
+
     public @NonNull Location getLocation() {
         return location.clone();
     }

@@ -36,11 +36,6 @@ public interface Model {
     public void spawn(Location location);
 
     /**
-     * called when a model
-     */
-    public void respawn(Object databaseEntry);
-
-    /**
      * called before the model is destroyed
      */
     public void remove();
