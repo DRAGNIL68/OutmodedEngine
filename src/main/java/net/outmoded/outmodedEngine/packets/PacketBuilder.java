@@ -16,28 +16,6 @@ import java.util.*;
 
 public class PacketBuilder {
 
-//    public void e() throws IllegalAccessException, LambdaConversionException {
-//
-//        MethodHandles.Lookup lookup = MethodHandles.lookup();
-//
-//        // The accessor method we want to access
-//        Method method = source.getClass().getDeclaredMethod("getLong");
-//
-//        MethodHandle methodHandle = lookup.unreflect(method);
-//
-//        // The type we want to bind our accessor to
-//        MethodType factoryType = MethodType.methodType(Function.class);
-//        // The expected return type of the accessor and the class the accessor is contained within
-//        MethodType interfaceMethodType = MethodType.methodType(Long.class, source.getClass());
-//
-//        // A reference to the accessor via the Function intermediary
-//        CallSite callSite = LambdaMetafactory.metafactory(lookup, "apply", factoryType, interfaceMethodType, methodHandle, methodHandle.type());
-//
-//        // The resultant Function that's now bound to the accessor
-//        Function<SomeSource, Long> lambdaMetafactoryFunction = (Function<SomeSource, Long>) callSite.getTarget().invoke();
-//    }
-
-
     public static class Entity {
         private int entityId;
         private final EntityType entityType;

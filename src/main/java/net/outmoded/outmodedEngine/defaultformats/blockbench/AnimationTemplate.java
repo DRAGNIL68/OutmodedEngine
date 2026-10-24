@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.defaultFormats.blockbench;
+package net.outmoded.outmodedEngine.defaultformats.blockbench;
 
 import com.google.common.collect.ImmutableList;
 

@@ -1,6 +1,6 @@
 package net.outmoded.outmodedEngine.live;
 
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.NodeTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.NodeTemplate;
 
 /**
  * handles how a bone in a model appears to the world

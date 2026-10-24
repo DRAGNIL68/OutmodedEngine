@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.defaultFormats.blockbench.live;
+package net.outmoded.outmodedEngine.defaultformats.blockbench.live;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;

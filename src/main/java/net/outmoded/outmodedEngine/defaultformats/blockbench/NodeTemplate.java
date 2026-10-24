@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.defaultFormats.blockbench;
+package net.outmoded.outmodedEngine.defaultformats.blockbench;
 
 import org.joml.Quaternionf;
 import org.joml.Vector3f;

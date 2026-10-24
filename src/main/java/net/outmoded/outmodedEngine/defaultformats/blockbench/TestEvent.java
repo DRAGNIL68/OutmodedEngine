@@ -1,7 +1,7 @@
-package net.outmoded.outmodedEngine.defaultFormats.blockbench;
+package net.outmoded.outmodedEngine.defaultformats.blockbench;
 
 import net.outmoded.fastListenerRegistration.EventListener;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.live.BBModel;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.live.BBModel;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

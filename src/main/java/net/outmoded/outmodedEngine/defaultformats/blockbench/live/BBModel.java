@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.defaultFormats.blockbench.live;
+package net.outmoded.outmodedEngine.defaultformats.blockbench.live;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.util.Quaternion4f;
@@ -9,8 +9,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.Config;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.BBModelTemplate;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.DefaultRenderer;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.BBModelTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.DefaultRenderer;
 import net.outmoded.outmodedEngine.live.*;
 import net.outmoded.outmodedEngine.packets.PacketBuilder;
 import net.outmoded.outmodedEngine.packets.PacketUtils;

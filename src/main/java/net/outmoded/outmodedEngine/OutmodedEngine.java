@@ -3,7 +3,7 @@ package net.outmoded.outmodedEngine;
 import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.outmoded.fastListenerRegistration.ListenerRegister;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.BBModelTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.BBModelTemplate;
 import net.outmoded.outmodedEngine.live.ModelManager;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
 import org.bukkit.NamespacedKey;

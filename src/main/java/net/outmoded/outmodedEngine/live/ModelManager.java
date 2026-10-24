@@ -1,7 +1,8 @@
 package net.outmoded.outmodedEngine.live;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.outmoded.outmodedEngine.OutmodedEngine;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.live.BBModel;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.live.BBModel;
 import org.apache.logging.log4j.util.InternalApi;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class ModelManager {
     private final ConcurrentHashMap<UUID, BBModel> modelHashMap = new ConcurrentHashMap<>();
+
+
+
+
+
 
     private ModelManager() {
         init();
@@ -30,6 +36,7 @@ public final class ModelManager {
 
     public void init(){
 
+        MiniMessage.miniMessage().deserialize("<red>hello");
 
         new BukkitRunnable() {
             @Override

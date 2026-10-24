@@ -1,9 +1,9 @@
 package net.outmoded.outmodedEngine.template;
 
 import com.google.common.collect.ImmutableMap;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.AnimationTemplate;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.NodeTemplate;
-import net.outmoded.outmodedEngine.defaultFormats.blockbench.VariantTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.AnimationTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.NodeTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.VariantTemplate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
