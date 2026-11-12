@@ -5,12 +5,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap;
 import net.outmoded.outmodedEngine.Co;
+import net.outmoded.outmodedEngine.packer.ResourcePack;
+import net.outmoded.outmodedEngine.resourcepack.ResourcePackManager;
 import net.outmoded.outmodedEngine.template.*;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,20 +25,53 @@ import java.util.concurrent.ConcurrentHashMap;
 
 // ALL data in this class should be immutable.
 public class BBModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
+    private final String PACK_NAMESPACE = "outmoded_engine";
     private final boolean isPersistent;
+    private final ResourcePackManager.Callback callback = new ResourcePackManager.Callback() {
+        @Override
+        public void trigger(ResourcePack resourcePack) {
+
+            texturesMap.forEach((key, texture) -> {
+
+                byte[] decodedTexture = Base64.getDecoder().decode(texture);
+
+                Co.warn(key+" : "+texture);
+
+                try (InputStream is = new ByteArrayInputStream(decodedTexture)) {
+                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/textures/item/"+key, is); // key has .png at the end
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+
+            });
+
+            modelDataMap.forEach((key, model) -> {
+                try (InputStream is = new ByteArrayInputStream(model.getBytes(StandardCharsets.UTF_8))) {
+                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/models/item/"+key+".json", is);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            });
+        }
+    };
 
     private final ConcurrentHashMap<UUID, NodeTemplate> nodesMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, VariantTemplate> variantsMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, AnimationTemplate> animationsMap = new ConcurrentHashMap<>();
+
     private final ConcurrentHashMap<String, String> texturesMap = new ConcurrentHashMap<>(); //name:base64
+    private final ConcurrentHashMap<String, String> modelDataMap = new ConcurrentHashMap<>(); //name:string. Stores model data per file as a string
+
 
     public BBModelTemplate(String json){
+
         this.isPersistent = true;
 
         //TODO: this is were the JSON should be converted into data.
-        // this is done INTERNALLY so hou cant fuck up anything async
+        // this is done INTERNALLY so you cant fuck up anything async
         // and yes I do have APS (async paranoia syndrome)
-
 
         // check JSON schema here <--
         buildTemplate(json);
@@ -66,6 +105,8 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
 
     // called once to create the template
     private void buildTemplate(String json){
+        ResourcePackManager.getInstance().registerCallback(callback);
+
         JsonNode jsonNode;
         try {
             jsonNode = TemplateUtils.readTree(json);
@@ -96,7 +137,7 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
             Iterator<String> iterator = textures.fieldNames();
             iterator.forEachRemaining(name -> {
                 Co.info("texture name: "+name);
-                texturesMap.put(name, textures.asText());
+                texturesMap.put(name, textures.get(name).asText());
             });
         }
 

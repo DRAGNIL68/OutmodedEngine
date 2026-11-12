@@ -57,7 +57,7 @@ public class Database {
         }
     }
 
-    // does not need to be async as it only going to be run once at the start same with close()
+
     private void createTables() {
 
         try {

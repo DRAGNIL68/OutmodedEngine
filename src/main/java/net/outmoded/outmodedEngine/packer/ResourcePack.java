@@ -24,71 +24,103 @@ public class ResourcePack {
         OBJECT_MAPPER.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
         OBJECT_MAPPER.setVisibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE);
         OBJECT_MAPPER.setVisibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE);
-
     }
 
-    private final ConcurrentHashMap<String, byte[]> byteData = new ConcurrentHashMap<>(); // new file name : data
+    private final ConcurrentHashMap<String, byte[]> byteData = new ConcurrentHashMap<>(); // new file path : data
 
-    public static ResourcePack create(){
-        return new ResourcePack();
+    public ResourcePack(){}
+
+    /**
+     *
+     * @param template JSON file
+     */
+    public void writeJson(JsonTemplate template) throws JsonProcessingException{
+        byteData.put(template.getFilePath(), OBJECT_MAPPER.writeValueAsString(template).getBytes(StandardCharsets.UTF_8));
     }
 
-    private ResourcePack(){
+    /**
+     * don't use this if you don't know how
+     * @throws IOException thrown if it cant read the InputStream
+     */
+
+    public void writeInputStream(String rpPath, InputStream inputStream) throws IOException{
+        byteData.put(rpPath, inputStream.readAllBytes());
     }
 
-    public void testWriteJson(String newPath, JsonTemplate template) {
-        try {
-            byteData.put(newPath, OBJECT_MAPPER.writeValueAsString(template).getBytes(StandardCharsets.UTF_8));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+    public void write(String rpPath, Path path) throws IOException, IllegalArgumentException{
+        if (!Files.exists(path.getParent())){
+            throw new IllegalArgumentException("path does not exist");
         }
-    }
 
-    public void testWrite(String newPath, Path path){
-        if (!Files.exists(path))
-            return; // run error
-
-        if (Files.isDirectory(path))
-            return; // run error
+        if (Files.isDirectory(path)){
+            throw new IllegalArgumentException("path cannot be a directory");
+        }
 
         try (InputStream input = Files.newInputStream(path)) {
-            byteData.put(newPath, input.readAllBytes());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            byteData.put(rpPath, input.readAllBytes());
         }
     }
 
 
-    public CompletableFuture<Void> write(String writePath, int compressionLevel, boolean debug){
+    /**
+     * generatest the rp
+     */
+    public CompletableFuture<Void> generate(String writePath, int compressionLevel, boolean debug){
 
-        return CompletableFuture.runAsync(() -> {
-            long startTime = System.currentTimeMillis();
-            FileOutputStream fos = null;
+        InputStream in = ResourcePack.class.getResourceAsStream("/offset_font.json");
+        InputStream in1 = ResourcePack.class.getResourceAsStream("/invisible1x1.png");
+
+        if (in != null ) {
             try {
-                fos = new FileOutputStream(writePath);
-            } catch (FileNotFoundException e) {
+                writeInputStream("assets/_packer/font/offset_font.json" ,in);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        if (in1 != null) {
+            try {
+                writeInputStream("assets/_packer/textures/invisible1x1.png" ,in1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            ConcurrentHashMap<String, byte[]> byteDataSnapshot = new ConcurrentHashMap<>(byteData); // async safety I hope
+
+            long startTime = System.currentTimeMillis();
+            FileOutputStream fos;
+            try {
+                Path path = Path.of(writePath).getParent();
+
+                if (!Files.isDirectory(path)){
+                    Files.createDirectories(path);
+                }
+
+                fos = new FileOutputStream(writePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
             BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             ZipOutputStream zipOut = new ZipOutputStream(bos);
             zipOut.setLevel(compressionLevel);
 
-            for (Map.Entry<String, byte[]> entry : byteData.entrySet()){
+            for (Map.Entry<String, byte[]> entry : byteDataSnapshot.entrySet()){
                 String key = entry.getKey();
                 byte[] bytes = entry.getValue();
 
                 if (debug)
-                    System.out.println("writing file: "+key);
+                    log("writing file: "+key);
+
                 try {
                     ZipEntry zipEntry = new ZipEntry(key);
                     zipOut.putNextEntry(zipEntry);
 
                     zipOut.write(bytes, 0, bytes.length);
-
-
-
                     zipOut.closeEntry();
 
                 } catch (IOException e) {
@@ -99,14 +131,37 @@ public class ResourcePack {
             long duration = System.currentTimeMillis() - startTime;
 
             if (debug)
-                System.out.println("time taken: "+duration+"ms");
+                log("time taken: "+duration+"ms");
 
             try {
                 zipOut.close();
+                bos.close();
                 fos.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
+
+        future.exceptionally(ex -> {
+            ex.printStackTrace();
+            return null;
+        });
+
+        return future;
+    }
+
+    /**
+     * disposes of data in resource pack
+     */
+    public void clear(){
+        byteData.clear();
+    }
+
+    /**
+     * if your using this in a Minecraft plugin override this
+     * to your plugins logger to avoid PaperMc complaining
+     */
+    public void log(String string){
+        System.out.println(string);
     }
 }

@@ -1,4 +1,4 @@
-package net.outmoded.outmodedEngine.packer;
+package net.outmoded.outmodedEngine.resourcepack;
 
 
 import com.google.common.hash.HashCode;

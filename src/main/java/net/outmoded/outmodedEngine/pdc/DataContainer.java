@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataContainer {
     private final ConcurrentHashMap<String, DataObject<?>> hashMap = new ConcurrentHashMap<>();
 
-
     public static DataContainer empty(){
         return new DataContainer();
     }
