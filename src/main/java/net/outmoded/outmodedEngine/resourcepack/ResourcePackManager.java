@@ -5,8 +5,8 @@ import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.OutmodedEngine;
 import net.outmoded.outmodedEngine.packer.ResourcePack;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class ResourcePackManager {
     private final CopyOnWriteArrayList<Callback> callbacks = new CopyOnWriteArrayList<>();
@@ -47,7 +47,8 @@ public class ResourcePackManager {
         callbacks.remove(callback);
     }
 
-    public static interface Callback{
+    @FunctionalInterface
+    public interface Callback{
         public void trigger(ResourcePack resourcePack);
     }
 

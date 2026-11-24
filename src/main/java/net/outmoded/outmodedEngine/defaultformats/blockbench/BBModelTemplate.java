@@ -105,7 +105,7 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
 
     // called once to create the template
     private void buildTemplate(String json){
-        ResourcePackManager.getInstance().registerCallback(callback);
+        ResourcePackManager.getInstance().registerCallback(callback); // this could be a lambda but I don't want messy code
 
         JsonNode jsonNode;
         try {
