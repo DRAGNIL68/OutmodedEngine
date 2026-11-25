@@ -1,10 +1,10 @@
 package net.outmoded.outmodedEngine.database;
 
+import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DatabaseManager {
-    CopyOnWriteArrayList<ModelLoadCallback> listeners = new CopyOnWriteArrayList<>();
-
+    CopyOnWriteArrayList<ModelLoadCallback> callbacks = new CopyOnWriteArrayList<>();
     private DatabaseManager() {}
 
     private static class SingletonHelper {
@@ -18,15 +18,21 @@ public class DatabaseManager {
 
     /**
      * used to register callbacks for model loading
-     * @param listener
+     * @param callback
      */
-    public void callback(ModelLoadCallback listener){
-        listeners.add(listener);
+    public void callback(ModelLoadCallback callback){
+        callbacks.add(callback);
+    }
+
+    public void removeCallback(ModelLoadCallback callback){
+        callbacks.remove(callback);
     }
 
     private void triggerListeners(){
-        listeners.forEach( listener -> {
-            listener.event(null);
+        Iterator<ModelLoadCallback> snapshot = callbacks.iterator();
+
+        snapshot.forEachRemaining(callback -> {
+            callback.event(null);
         });
     }
 }

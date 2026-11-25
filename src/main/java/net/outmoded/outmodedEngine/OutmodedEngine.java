@@ -338,18 +338,10 @@ public final class OutmodedEngine extends JavaPlugin {
                 """;
 
         BBModelTemplate template = new BBModelTemplate(json);
-        NamespacedKey key = new NamespacedKey("test", "test");
+        //NamespacedKey key = new NamespacedKey("test", "test");
         ModelTemplateManager.getInstance().registerModelTemplate(new NamespacedKey("test", "test"), template);
 
         ResourcePackManager.getInstance().generate();
-
-//        PacketUtils.getNextId();
-//        BBModelTemplate modelTemplate = new BBModelTemplate.Builder().build();
-//
-//        NamespacedKey namespacedKey = new NamespacedKey("frog", "test");
-//
-//        ModelTemplateManager.getInstance().registerModelTemplate(namespacedKey, modelTemplate);
-
     }
 
 

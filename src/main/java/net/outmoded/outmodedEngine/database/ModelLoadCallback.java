@@ -5,5 +5,5 @@ package net.outmoded.outmodedEngine.database;
  */
 // the reason this is not a Bukkit even is I would like it to be platform-agnostic
 public interface ModelLoadCallback {
-    public void event(Object listener);
+    public void event(Object listener); // not done
 }

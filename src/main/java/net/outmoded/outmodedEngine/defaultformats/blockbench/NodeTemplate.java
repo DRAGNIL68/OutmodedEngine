@@ -4,12 +4,11 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.Arrays;
-
+// could be turned into a record at some point
 public class NodeTemplate{
 
     private final String name;
     private final String nodeType;
-
     private final Vector3f translation;
     private final Quaternionf leftRotation;
     private final Vector3f scale;
@@ -23,7 +22,6 @@ public class NodeTemplate{
         this.scale = scale;
         this.position = position;
     }
-
 
     public String getName() {return name;}
 

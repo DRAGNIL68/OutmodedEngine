@@ -14,8 +14,8 @@ public class TestEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
 
-        NamespacedKey key = new NamespacedKey("test", "test");
-        BBModel bbModel = new BBModel(UUID.randomUUID(), key, event.getPlayer().getLocation());
+        NamespacedKey templateKey = new NamespacedKey("test", "test");
+        BBModel bbModel = new BBModel(UUID.randomUUID(), templateKey, event.getPlayer().getLocation());
         bbModel.register();
     }
 
