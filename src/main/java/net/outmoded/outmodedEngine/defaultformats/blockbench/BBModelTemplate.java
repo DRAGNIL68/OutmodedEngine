@@ -165,12 +165,12 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
                     Float[] pos = TemplateUtils.mapper().treeToValue(transform.get("position"), jacksonTypeReference); // does not need to be changed in any way
                     Float[] leftList = TemplateUtils.mapper().treeToValue(transform.get("left_rotation"), jacksonTypeReference); // left rotation
                     Float[] translationList = TemplateUtils.mapper().treeToValue(transform.get("translation"), jacksonTypeReference);
-                    Float[] scaleList = TemplateUtils.mapper().treeToValue(transform.get("scale"), jacksonTypeReference);
+                    //Float[] scaleList = TemplateUtils.mapper().treeToValue(transform.get("scale"), jacksonTypeReference);
                     Quaternionf leftRot = new Quaternionf(leftList[0], leftList[1], leftList[2], leftList[3]);
 
                     Vector3f translation = new Vector3f(); // cant do this yet
 
-                    Vector3f scale = new Vector3f(scaleList[0], scaleList[1], scaleList[2]);
+                    Vector3f scale = new Vector3f(1, 1, 1);
 
                     NodeTemplate nodeTemplate = new NodeTemplate(
                             name,
@@ -189,16 +189,29 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
             }
         }
 
+        {
+            // variants and model data abd textures
+            JsonNode texture_variants = jsonNode.get("texture_variants");
+
+            Iterator<String> iterator = texture_variants.fieldNames();
+            iterator.forEachRemaining(name -> {
+                Co.info("variant name: "+name);
+
+                JsonNode groupNode = texture_variants.get(name);
+                Iterator<String> iterator1 = groupNode.fieldNames();
+                iterator.forEachRemaining(group -> {
+                    Co.info("group uuid: "+group);
+                });
+
+            });
+        }
 
         {
             // animation data
             JsonNode animations = jsonNode.get("animations");
         }
 
-        {
-            // variants and model data abd textures
-            JsonNode texture_variants = jsonNode.get("texture_variants");
-        }
+
 
     }
 }
