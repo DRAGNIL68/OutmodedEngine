@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 // ALL data in this class should be immutable.
 public class BBModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
-    private final String PACK_NAMESPACE = "outmoded_engine";
+    public final String PACK_NAMESPACE = "outmoded_engine";
     private final boolean isPersistent;
     private final ResourcePackManager.Callback callback = new ResourcePackManager.Callback() {
         @Override
@@ -38,7 +38,7 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
                 Co.warn(key+" : "+texture);
 
                 try (InputStream is = new ByteArrayInputStream(decodedTexture)) {
-                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/textures/item/"+key, is); // key has .png at the end
+                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/textures/item/"+""+"/"+key, is); // key has .png at the end
                 }
                 catch (IOException e){
                     e.printStackTrace();
@@ -94,6 +94,20 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
     /**
      * Is an immutable view
      */
+    public @NonNull ImmutableMap<String, String> getTexturesMap(){
+        return ImmutableMap.copyOf(texturesMap);
+    }
+
+    /**
+     * Is an immutable view
+     */
+    public @NonNull ImmutableMap<String, String> getModelDataMap(){
+        return ImmutableMap.copyOf(modelDataMap);
+    }
+
+    /**
+     * Is an immutable view
+     */
     public @NonNull ImmutableMap<UUID, NodeTemplate> getNodesMap(){
         return ImmutableMap.copyOf(nodesMap);
     }
@@ -102,10 +116,9 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
         return isPersistent;
     }
 
-
     // called once to create the template
     private void buildTemplate(String json){
-        ResourcePackManager.getInstance().registerCallback(callback); // this could be a lambda but I don't want messy code
+
 
         JsonNode jsonNode;
         try {

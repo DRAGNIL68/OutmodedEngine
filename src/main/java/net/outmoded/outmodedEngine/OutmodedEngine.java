@@ -4,6 +4,7 @@ import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.outmoded.fastListenerRegistration.ListenerRegister;
 import net.outmoded.outmodedEngine.defaultformats.blockbench.BBModelTemplate;
+import net.outmoded.outmodedEngine.defaultformats.blockbench.RPCallback;
 import net.outmoded.outmodedEngine.live.ModelManager;
 import net.outmoded.outmodedEngine.resourcepack.ResourcePackManager;
 import net.outmoded.outmodedEngine.template.ModelTemplateManager;
@@ -25,9 +26,9 @@ public final class OutmodedEngine extends JavaPlugin {
         ListenerRegister.register(this);
         PacketEvents.getAPI().init();
 
-        // this is here to start some code not very smart
-        ModelTemplateManager.getInstance();
-        ModelManager.getInstance();
+
+        ModelManager.getInstance().init();
+        RPCallback.register();
         // ####################################
         String json = """
                 {
@@ -339,7 +340,7 @@ public final class OutmodedEngine extends JavaPlugin {
 
         BBModelTemplate template = new BBModelTemplate(json);
         //NamespacedKey key = new NamespacedKey("test", "test");
-        ModelTemplateManager.getInstance().registerModelTemplate(new NamespacedKey("test", "test"), template);
+        ModelTemplateManager.getInstance().registerModelTemplate(new NamespacedKey("outmoded_engine", "test"), template);
 
         ResourcePackManager.getInstance().generate();
     }

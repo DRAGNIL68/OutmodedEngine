@@ -21,7 +21,6 @@ public final class ModelManager {
 
 
     private ModelManager() {
-        init();
     }
 
     private static class SingletonHelper {

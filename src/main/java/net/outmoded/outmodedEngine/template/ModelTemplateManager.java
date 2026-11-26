@@ -3,6 +3,7 @@ package net.outmoded.outmodedEngine.template;
 import org.bukkit.NamespacedKey;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class ModelTemplateManager {
     private final ConcurrentHashMap<NamespacedKey, ModelTemplate> modelTemplateHashMap = new ConcurrentHashMap<>();
@@ -37,6 +38,10 @@ public final class ModelTemplateManager {
             return null;
 
         return modelTemplateHashMap.get(namespacedKey);
+    }
+
+    public ConcurrentHashMap<NamespacedKey, ModelTemplate> getAllTemplates(){
+        return new ConcurrentHashMap<NamespacedKey, ModelTemplate>(modelTemplateHashMap);
     }
 
 
