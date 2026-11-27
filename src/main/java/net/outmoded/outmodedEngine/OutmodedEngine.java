@@ -31,316 +31,240 @@ public final class OutmodedEngine extends JavaPlugin {
         RPCallback.register();
         // ####################################
         String json = """
-                {
-                     "settings": {
-                         "namespacedId": "",
-                         "credit": "Made with BlockBench",
-                         "user_properties": {}
-                     },
-                     "textures": {
-                         "texture.png": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeUlEQVR4AeyQoQ2AQAxFe6eReBa4UXDgUIwAQd0MLIBCI9iAVfAIJAJBcuTbS5prUkdo8kTb3/anttmuAO69D6BqhwBIGFaoY2X2cBOBZ8kJrPNoADsRNfQOurMmkHlvQHQgmeodlK4wIHmKEegdMIvF5d8B0Qd+8AIAAP//bQT7vwAAAAZJREFUAwBhuCIhFW4C3gAAAABJRU5ErkJggg==",
-                         "texture1.png": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAb0lEQVR4AeyQsQmAQAxFf9K4gr2ruIETuII6hrqCE7iBq9g7gl3kN1cIB3emkws8COQn/xM1wMh9Dka6fjKCxNJEXVSm7bWAVM0Ksm+zkOjGa+BPcNQjiABCkFn+BHQlmcZB7k8QTn1sSgLgBz94AAAA///8eNPnAAAABklEQVQDAL9HGiF64kRiAAAAAElFTkSuQmCC"
-                     },
-                     "structure": {
-                         "079720da-8430-13b3-f506-f5f355b69346": {
-                             "uuid": "079720da-8430-13b3-f506-f5f355b69346",
-                             "type": "group",
-                             "name": "bone",
-                             "transform": {
-                                 "position": [
-                                     0,
-                                     0,
-                                     0
-                                 ],
-                                 "left_rotation": [
-                                     0,
-                                     0,
-                                     0,
-                                     1
-                                 ],
-                                 "translation": [
-                                     0,
-                                     0,
-                                     0
-                                 ]
-                             },
-                             "properties": {},
-                             "user_properties": {}
-                         },
-                         "2a295154-eacc-05de-1e77-84501cfcc06e": {
-                             "uuid": "2a295154-eacc-05de-1e77-84501cfcc06e",
-                             "type": "group",
-                             "name": "bone2",
-                             "transform": {
-                                 "position": [
-                                     0,
-                                     0,
-                                     7
-                                 ],
-                                 "left_rotation": [
-                                     0,
-                                     0,
-                                     0,
-                                     1
-                                 ],
-                                 "translation": [
-                                     0,
-                                     0,
-                                     7
-                                 ]
-                             },
-                             "properties": {},
-                             "user_properties": {}
-                         },
-                         "d153e582-eb2b-be5f-d9eb-bf16db067464": {
-                             "uuid": "d153e582-eb2b-be5f-d9eb-bf16db067464",
-                             "type": "group",
-                             "name": "bone3",
-                             "transform": {
-                                 "position": [
-                                     0,
-                                     0,
-                                     -7
-                                 ],
-                                 "left_rotation": [
-                                     0,
-                                     0,
-                                     0,
-                                     1
-                                 ],
-                                 "translation": [
-                                     0,
-                                     0,
-                                     -7
-                                 ]
-                             },
-                             "properties": {},
-                             "user_properties": {}
-                         }
-                     },
-                     "animations": "data",
-                     "texture_variants": {
-                         "1": {
-                             "079720da-8430-13b3-f506-f5f355b69346": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 -1
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 1
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     0
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             },
-                             "2a295154-eacc-05de-1e77-84501cfcc06e": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 6
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 8
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     7
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             },
-                             "d153e582-eb2b-be5f-d9eb-bf16db067464": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 -8
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 -6
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     -7
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             }
-                         },
-                         "default": {
-                             "079720da-8430-13b3-f506-f5f355b69346": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 -1
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 1
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     0
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             },
-                             "2a295154-eacc-05de-1e77-84501cfcc06e": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 6
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 8
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     7
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             },
-                             "d153e582-eb2b-be5f-d9eb-bf16db067464": {
-                                 "format_version": "1.21.11",
-                                 "texture_size": [
-                                     -1,
-                                     -1
-                                 ],
-                                 "textures": {},
-                                 "data": {
-                                     "elements": [
-                                         {
-                                             "from": [
-                                                 -1,
-                                                 0,
-                                                 -8
-                                             ],
-                                             "to": [
-                                                 1,
-                                                 2,
-                                                 -6
-                                             ],
-                                             "rotation": {
-                                                 "x": 0,
-                                                 "y": 0,
-                                                 "z": 0,
-                                                 "origin": [
-                                                     0,
-                                                     0,
-                                                     -7
-                                                 ]
-                                             },
-                                             "faces": {}
-                                         }
-                                     ]
-                                 }
-                             }
-                         }
-                     }
-                 }
+{
+    "settings": {
+        "namespacedId": "",
+        "credit": "Made with BlockBench",
+        "user_properties": {}
+    },
+    "textures": {
+        "texture.png": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAeUlEQVR4AeyQoQ2AQAxFe6eReBa4UXDgUIwAQd0MLIBCI9iAVfAIJAJBcuTbS5prUkdo8kTb3/anttmuAO69D6BqhwBIGFaoY2X2cBOBZ8kJrPNoADsRNfQOurMmkHlvQHQgmeodlK4wIHmKEegdMIvF5d8B0Qd+8AIAAP//bQT7vwAAAAZJREFUAwBhuCIhFW4C3gAAAABJRU5ErkJggg==",
+        "texture1.png": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR4AeyQwQoAIAhDl///z8Yuuyxh0C0SBpHPTawG+iSEVSE3YmawgEUhLDMI54TJgKmUOuFDBiFvWDGVsk74cb9BGDRifwPggRtsAAAA//9LYt8MAAAABklEQVQDAGnADCGBPxr1AAAAAElFTkSuQmCC"
+    },
+    "structure": {
+        "8dd7c0c9-b695-ecdd-f3b0-f63ff14b5f51": {
+            "uuid": "8dd7c0c9-b695-ecdd-f3b0-f63ff14b5f51",
+            "type": "group",
+            "name": "bone",
+            "transform": {
+                "position": [
+                    0,
+                    0,
+                    0
+                ],
+                "left_rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "translation": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "properties": {},
+            "user_properties": {}
+        }
+    },
+    "animations": "data",
+    "texture_variants": {
+        "1": {
+            "8dd7c0c9-b695-ecdd-f3b0-f63ff14b5f51": {
+                "format_version": "1.21.11",
+                "texture_size": [
+                    -1,
+                    -1
+                ],
+                "textures": {
+                    "5": "texture1.png"
+                },
+                "data": {
+                    "elements": [
+                        {
+                            "from": [
+                                -1,
+                                0,
+                                -1
+                            ],
+                            "to": [
+                                1,
+                                2,
+                                1
+                            ],
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "origin": [
+                                    0,
+                                    0,
+                                    0
+                                ]
+                            },
+                            "faces": {
+                                "north": {
+                                    "uv": [
+                                        0,
+                                        0,
+                                        2,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "east": {
+                                    "uv": [
+                                        0,
+                                        2,
+                                        2,
+                                        4
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "south": {
+                                    "uv": [
+                                        2,
+                                        0,
+                                        4,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "west": {
+                                    "uv": [
+                                        2,
+                                        2,
+                                        4,
+                                        4
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "up": {
+                                    "uv": [
+                                        0,
+                                        4,
+                                        2,
+                                        6
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "down": {
+                                    "uv": [
+                                        4,
+                                        0,
+                                        6,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "default": {
+            "8dd7c0c9-b695-ecdd-f3b0-f63ff14b5f51": {
+                "format_version": "1.21.11",
+                "texture_size": [
+                    -1,
+                    -1
+                ],
+                "textures": {
+                    "5": "texture.png"
+                },
+                "data": {
+                    "elements": [
+                        {
+                            "from": [
+                                -1,
+                                0,
+                                -1
+                            ],
+                            "to": [
+                                1,
+                                2,
+                                1
+                            ],
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "origin": [
+                                    0,
+                                    0,
+                                    0
+                                ]
+                            },
+                            "faces": {
+                                "north": {
+                                    "uv": [
+                                        0,
+                                        0,
+                                        2,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "east": {
+                                    "uv": [
+                                        0,
+                                        2,
+                                        2,
+                                        4
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "south": {
+                                    "uv": [
+                                        2,
+                                        0,
+                                        4,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "west": {
+                                    "uv": [
+                                        2,
+                                        2,
+                                        4,
+                                        4
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "up": {
+                                    "uv": [
+                                        0,
+                                        4,
+                                        2,
+                                        6
+                                    ],
+                                    "texture": "#5"
+                                },
+                                "down": {
+                                    "uv": [
+                                        4,
+                                        0,
+                                        6,
+                                        2
+                                    ],
+                                    "texture": "#5"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
                 """;
 
-        BBModelTemplate template = new BBModelTemplate(json);
-        //NamespacedKey key = new NamespacedKey("test", "test");
-        ModelTemplateManager.getInstance().registerModelTemplate(new NamespacedKey("outmoded_engine", "test"), template);
+        NamespacedKey key = new NamespacedKey("outmoded_engine", "test");
+        BBModelTemplate template = new BBModelTemplate(json, key);
+        ModelTemplateManager.getInstance().registerModelTemplate(key, template);
 
         ResourcePackManager.getInstance().generate();
     }

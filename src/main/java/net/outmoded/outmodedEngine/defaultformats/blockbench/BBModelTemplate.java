@@ -8,6 +8,7 @@ import net.outmoded.outmodedEngine.Co;
 import net.outmoded.outmodedEngine.packer.ResourcePack;
 import net.outmoded.outmodedEngine.resourcepack.ResourcePackManager;
 import net.outmoded.outmodedEngine.template.*;
+import org.bukkit.NamespacedKey;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.jspecify.annotations.NonNull;
@@ -25,37 +26,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 // ALL data in this class should be immutable.
 public class BBModelTemplate implements net.outmoded.outmodedEngine.template.ModelTemplate {
-    public final String PACK_NAMESPACE = "outmoded_engine";
+
     private final boolean isPersistent;
-    private final ResourcePackManager.Callback callback = new ResourcePackManager.Callback() {
-        @Override
-        public void trigger(ResourcePack resourcePack) {
-
-            texturesMap.forEach((key, texture) -> {
-
-                byte[] decodedTexture = Base64.getDecoder().decode(texture);
-
-                Co.warn(key+" : "+texture);
-
-                try (InputStream is = new ByteArrayInputStream(decodedTexture)) {
-                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/textures/item/"+""+"/"+key, is); // key has .png at the end
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-
-            });
-
-            modelDataMap.forEach((key, model) -> {
-                try (InputStream is = new ByteArrayInputStream(model.getBytes(StandardCharsets.UTF_8))) {
-                    resourcePack.writeInputStream("assets/"+PACK_NAMESPACE+"/models/item/"+key+".json", is);
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-            });
-        }
-    };
+    public final NamespacedKey namespacedKey;
 
     private final ConcurrentHashMap<UUID, NodeTemplate> nodesMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, VariantTemplate> variantsMap = new ConcurrentHashMap<>();
@@ -65,8 +38,8 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
     private final ConcurrentHashMap<String, String> modelDataMap = new ConcurrentHashMap<>(); //name:string. Stores model data per file as a string
 
 
-    public BBModelTemplate(String json){
-
+    public BBModelTemplate(String json, NamespacedKey namespacedKey){
+        this.namespacedKey = namespacedKey;
         this.isPersistent = true;
 
         //TODO: this is were the JSON should be converted into data.
@@ -214,6 +187,7 @@ public class BBModelTemplate implements net.outmoded.outmodedEngine.template.Mod
                 Iterator<String> iterator1 = groupNode.fieldNames();
                 iterator.forEachRemaining(group -> {
                     Co.info("group uuid: "+group);
+                    modelDataMap.put(name, group);
                 });
 
             });

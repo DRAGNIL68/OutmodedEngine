@@ -1,6 +1,14 @@
 package net.outmoded.outmodedEngine;
 
 
+/**
+ * TODO
+ * in Minecraft as far as I understand when the server has a slowdown and is forced to skip ticks,
+ * it does some strange stuff to jump
+ * now my real problem is do I replicate with the model tick
+ *
+ *
+ */
 
 /**
  * a simple server tick implementation
@@ -26,7 +34,7 @@ public class ServerTicker {
     /**
      * creates a timed tick loop
      */
-    public void loop(Runnable runnable){ // runs the logic tickTime times per second
+    public void loop(Runnable runnable){ // runs the logic {tickTime} times per second
         // this code is shit`
         long lastRun = System.nanoTime();
         long deltaTime;

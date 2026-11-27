@@ -40,7 +40,7 @@ public class RPCallback {
 
             model.getModelDataMap().forEach((key, modelData) -> {
                 try (InputStream is = new ByteArrayInputStream(modelData.getBytes(StandardCharsets.UTF_8))) {
-                    resourcePack.writeInputStream("assets/"+model.PACK_NAMESPACE+"/models/item/"+namespacedKey.key()+"/"+key+".json", is);
+                    resourcePack.writeInputStream("assets/"+namespacedKey.getNamespace()+"/models/item/"+namespacedKey.getKey()+"/"+key+".json", is);
                 }
                 catch (IOException e){
                     e.printStackTrace();
